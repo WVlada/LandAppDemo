@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  name  String
+}
+
+model Parcel {
+  id    Int     @id @default(autoincrement())
+  rb Int
+  ko String
+  potes String
+  number String
+  klasa String
+  povrsina Int
+  vlasnistvo String
+}
