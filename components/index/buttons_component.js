@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, ButtonGroup, VStack  } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
+import FileUploadForm from './upload_file'
 
 const LeftButtons = () => {
   const toast = useToast();
@@ -23,9 +24,10 @@ const LeftButtons = () => {
   };
   return (
     <div className="text-xs">
-      <Button onClick={handleResetButtonClick} p={2} fontSize={"inherit"}>
+      {/*<Button onClick={handleResetButtonClick} p={2} fontSize={"inherit"}>
         <p className="block">reset</p>
-      </Button>
+  </Button>*/}
+      <FileUploadForm />
       <Button p={2} fontSize={"inherit"}>
         ewe
       </Button>
