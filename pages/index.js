@@ -2,6 +2,7 @@ import Map from "../components/index/map_component";
 import LeftButtons from "../components/index/buttons_component";
 import { PrismaClient } from "@prisma/client";
 
+
 export default function Index({ sumOfParcels }) {
   return (
     <div className="grid grid-cols-10">
@@ -20,15 +21,13 @@ export default function Index({ sumOfParcels }) {
 
 export async function getStaticProps(context) {
   const prisma = new PrismaClient();
-  //const allParcels = await prisma.parcel.findMany();
-  const sumOfParcels = [];
-  //const sumOfParcels = await prisma.parcel.groupBy({
-  //  by: ["vlasnistvo"],
-  //  _sum: {
-  //    povrsina: true,
-  //  },
-  //});
-  //console.log(sumOfParcels)
+  const allParcels = await prisma.parcel.findMany();
+  const sumOfParcels = await prisma.parcel.groupBy({
+    by: ["vlasnistvo"],
+    _sum: {
+      povrsina: true,
+    },
+  });
   return {
     props: {
       sumOfParcels: sumOfParcels,
