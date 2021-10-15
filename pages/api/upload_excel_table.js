@@ -50,17 +50,17 @@ export default async function handler(req, res) {
     }
   });
   // now remove all files
-  const directory = "./utils/upload/";
-
-  fs.readdir(directory, (err, files) => {
-    if (err) throw err;
-
-    for (const file of files) {
-      fs.unlink(path.join(directory, file), (err) => {
-        if (err) throw err;
-      });
-    }
-  });
+  //const directory = "./utils/upload/";
+//
+  //fs.readdir(directory, (err, files) => {
+  //  if (err) throw err;
+//
+  //  for (const file of files) {
+  //    fs.unlink(path.join(directory, file), (err) => {
+  //      if (err) throw err;
+  //    });
+  //  }
+  //});
 
   return res.redirect('/');
 }
