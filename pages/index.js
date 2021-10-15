@@ -11,8 +11,8 @@ export default function Index({ sumOfParcels }) {
       <div className="col-span-8">
         <Map />
       </div>
-      <div>{sumOfParcels.map((s)=>{
-        return <p>{s._sum.povrsina}</p>
+      <div>{sumOfParcels.map((s, index)=>{
+        return <p key={index}>{s._sum.povrsina}</p>
       })}</div>
     </div>
   );
@@ -20,14 +20,15 @@ export default function Index({ sumOfParcels }) {
 
 export async function getStaticProps(context) {
   const prisma = new PrismaClient();
-  const allParcels = await prisma.parcel.findMany();
-  const sumOfParcels = await prisma.parcel.groupBy({
-    by: ["vlasnistvo"],
-    _sum: {
-      povrsina: true,
-    },
-  });
-  console.log(sumOfParcels)
+  //const allParcels = await prisma.parcel.findMany();
+  const sumOfParcels = [];
+  //const sumOfParcels = await prisma.parcel.groupBy({
+  //  by: ["vlasnistvo"],
+  //  _sum: {
+  //    povrsina: true,
+  //  },
+  //});
+  //console.log(sumOfParcels)
   return {
     props: {
       sumOfParcels: sumOfParcels,
