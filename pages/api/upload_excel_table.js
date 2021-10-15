@@ -5,6 +5,10 @@ import { PrismaClient } from "@prisma/client";
 
 export default async function handler(req, res) {
   const form = new formidable.IncomingForm();
+  const dir = './utils/upload/'
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
   form.uploadDir = "./utils/upload/";
   form.keepExtensions = true;
   form.parse(req, async (err, fields, files) => {
