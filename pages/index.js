@@ -1,6 +1,7 @@
 import Map from "../components/index/map_component";
 import LeftButtons from "../components/index/buttons_component";
 import { PrismaClient } from "@prisma/client";
+import PivotTable  from "../components/index/pivot.component";
 
 
 export default function Index({ sumOfParcels }) {
@@ -11,7 +12,9 @@ export default function Index({ sumOfParcels }) {
       </div>
       <div className="col-span-8">
         <Map />
+        <PivotTable data={sumOfParcels} />
       </div>
+      
       <div>{sumOfParcels.map((s, index)=>{
         return <p key={index}>{s._sum.povrsina}</p>
       })}</div>
