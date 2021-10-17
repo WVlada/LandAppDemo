@@ -37,11 +37,13 @@ const Map = () => {
   const handleLoad = ()=>{
     onOpen()
   }   
-  //console.log(ratio)
   return (
     <div id="map-layout" className="relative">
       {
-        <Popover
+        coords.opstine.map((e)=>{
+          return (
+          <Popover
+          key={e.name}
           id={1}
           isOpen={isOpen}
           nOpen={onOpen}
@@ -49,10 +51,12 @@ const Map = () => {
           placement="right"
           closeOnBlur={false}
         >
-          <PopoverContent top={806*ratio} left={858*ratio} width={40} className="" p={5}>
+          <PopoverContent borderWidth={2} borderColor={e.strokeColor} top={e.top*ratio} left={e.left*ratio} width={40} className="" p={2}>
             eweqweqwe
           </PopoverContent>
-        </Popover>
+        </Popover>)
+        })
+        
       }
       <ImageMapper
         imgWidth={mapa_width}
@@ -61,7 +65,6 @@ const Map = () => {
           console.log(area.center);
         }}
         onLoad={() => {
-          //console.log(isOpen);
           handleLoad();
         }}
         active
