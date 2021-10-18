@@ -1,23 +1,22 @@
 import Map from "../components/index/map_component";
 import LeftButtons from "../components/index/buttons_component";
 import { PrismaClient } from "@prisma/client";
-import PivotTable  from "../components/index/pivot.component";
-
+import TableComponent from "../components/index/table.component";
+import FileUploadForm from "../components/index/upload_file";
 
 export default function Index({ sumOfParcels }) {
   return (
-    <div className="grid grid-cols-10">
-      <div className="">
+    <div className="flex flex-col flex-1">
+      <div className="flex flex-row flex-1">
+        <LeftButtons />
+        <Map />
         <LeftButtons />
       </div>
-      <div className="col-span-8">
-        <Map />
-        <PivotTable data={sumOfParcels} />
+
+      <div className="flex flex-col flex-1">
+        <FileUploadForm />
+        <TableComponent data={sumOfParcels} />
       </div>
-      
-      <div>{sumOfParcels.map((s, index)=>{
-        return <p key={index}>{s._sum.povrsina}</p>
-      })}</div>
     </div>
   );
 }
@@ -31,6 +30,7 @@ export async function getStaticProps(context) {
       povrsina: true,
     },
   });
+  console.log(sumOfParcels)
   return {
     props: {
       sumOfParcels: sumOfParcels,

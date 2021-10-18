@@ -38,7 +38,7 @@ const Map = () => {
     onOpen()
   }   
   return (
-    <div id="map-layout" className="relative">
+    <div id="map-layout" className=" flex-1">
       {
         coords.opstine.map((e)=>{
           return (
@@ -50,8 +50,10 @@ const Map = () => {
           onClose={onClose}
           placement="right"
           closeOnBlur={false}
+          w={0}
+          className=""
         >
-          <PopoverContent borderWidth={2} borderColor={e.strokeColor} top={e.top*ratio} left={e.left*ratio} width={40} className="" p={2}>
+          <PopoverContent w={[20, 40]} className="text-xs md:text-xl" borderWidth={[1,2]} borderColor={e.strokeColor} top={e.top*ratio} left={e.left*ratio} p={[1,2]}>
             eweqweqwe
           </PopoverContent>
         </Popover>)
