@@ -38,28 +38,34 @@ const Map = () => {
     onOpen()
   }   
   return (
-    <div id="map-layout" className="w-full h-auto flex flex-1">
-      {
-        coords.opstine.map((e)=>{
-          return (
+    <div id="map-layout" className="w-full min-w-0 h-auto flex flex-1">
+      {coords.opstine.map((e) => {
+        return (
           <Popover
-          key={e.name}
-          id={1}
-          isOpen={isOpen}
-          nOpen={onOpen}
-          onClose={onClose}
-          placement="right"
-          closeOnBlur={false}
-          w={0}
-          className=""
-        >
-          <PopoverContent w={[20, 40]} className="text-xs md:text-xl" borderWidth={[1,2]} borderColor={e.strokeColor} top={e.top*ratio} left={e.left*ratio} p={[1,2]}>
-            eweqweqwe
-          </PopoverContent>
-        </Popover>)
-        })
-        
-      }
+            key={e.name}
+            id={1}
+            isOpen={isOpen}
+            nOpen={onOpen}
+            onClose={onClose}
+            placement="right"
+            closeOnBlur={false}
+            w={0}
+            className=""
+          >
+            <PopoverContent
+              w={[20, 40]}
+              className="text-xs md:text-xl"
+              borderWidth={[1, 2]}
+              borderColor={e.strokeColor}
+              top={e.top * ratio}
+              left={e.left * ratio}
+              p={[1, 2]}
+            >
+              eweqweqwe
+            </PopoverContent>
+          </Popover>
+        );
+      })}
       <ImageMapper
         imgWidth={mapa_width}
         onClick={(area) => console.log(area)}
