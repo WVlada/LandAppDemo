@@ -38,7 +38,7 @@ const Map = () => {
     onOpen()
   }   
   return (
-    <div id="map-layout" className=" flex-1">
+    <div id="map-layout" className="w-full h-auto flex flex-1">
       {
         coords.opstine.map((e)=>{
           return (
