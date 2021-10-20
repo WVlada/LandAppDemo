@@ -63,7 +63,7 @@ const FileUploadForm = () => {
     router.reload();
   };
   return (
-    <div className="text-xs">
+    <div className="text-xs mt-10">
       <form
         method="post"
         action="/api/upload_excel_table"

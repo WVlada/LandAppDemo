@@ -8,9 +8,8 @@ export default function Index({ sumOfParcels }) {
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
-        <LeftButtons />
+        <LeftButtons sumOfParcels={sumOfParcels} />
         <Map />
-        <LeftButtons />
       </div>
 
       <div className="flex flex-col flex-1">

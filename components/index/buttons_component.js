@@ -1,33 +1,24 @@
 import { useEffect, useState } from "react";
-import { Button, ButtonGroup, VStack } from "@chakra-ui/react";
+import { CheckboxGroup, Checkbox, VStack } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 
-
-const LeftButtons = () => {
+const LeftButtons = ({ sumOfParcels }) => {
   return (
-    <div className="text-xs flex flex-col">
-      
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        agrobanat
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        nicco
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        polet
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        DJn
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        ewe
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        ewe
-      </Button>
-      <Button p={[1, 2]} h={5} fontSize={"inherit"}>
-        ewe
-      </Button>
+    <div className="text-xs md:text-lg flex flex-col w-24 mt-5">
+      {sumOfParcels.map((s, index) => {
+        return (
+          <Checkbox
+            className="truncate overflow-ellipsis"
+            p={[1, 2]}
+            h={5}
+            key={s.vlasnistvo}
+            fontSize={[12, 16]}
+            mt={[0,5]}
+          >
+            {s.vlasnistvo}
+          </Checkbox>
+        );
+      })}
     </div>
   );
 };

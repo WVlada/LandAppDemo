@@ -15,14 +15,22 @@ const TableComponent = ({ data }) => {
   const handleChange = () => {};
   const formatNumber = (number) => {
     const x = String(number);
-    switch (x) {
-      case number > 1000:
-        return "";
-
-      case number > 100:
-        return "";
+    if (number > 10000) {
+      let y = x.split("");
+      y.splice(y.length - 4, 0, "h ");
+      y.splice(y.length - 2, 0, "a ");
+      y.splice(y.length, 0, "m ");
+      return y;
+    } else if (number > 100) {
+      let y = x.split("");
+      y.splice(y.length - 2, 0, "a ");
+      y.splice(y.length, 0, "m ");
+      return y;
+    } else {
+      let y = x.split("");
+      y.splice(y.length, 0, "m ");
+      return y;
     }
-    return number;
   };
   return (
     <Table
@@ -53,12 +61,14 @@ const TableComponent = ({ data }) => {
           return (
             <Tr key={index}>
               <Td p={[1, 5]}>{s.vlasnistvo}</Td>
-              <Td p={[1, 5]}>{formatNumber(s._sum.povrsina)}</Td>
-              <Td p={[1, 5]} isNumeric>
-                25.4
+              <Td textAlign="right" p={[1, 5]}>
+                {formatNumber(s._sum.povrsina)}
               </Td>
               <Td p={[1, 5]} isNumeric>
-                25.4
+                {formatNumber(s._sum.povrsina)}
+              </Td>
+              <Td p={[1, 5]} isNumeric>
+                {formatNumber(s._sum.povrsina)}
               </Td>
             </Tr>
           );
