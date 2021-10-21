@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import formidable from "formidable";
 import { PrismaClient } from "@prisma/client";
 
 export default async function handler(req, res) {
@@ -15,12 +14,12 @@ export default async function handler(req, res) {
       let parcel = await prisma.parcel.create({
         data: {
           rb: rb,
-          ko: data[rb][3],
-          potes: data[rb][4] ? data[rb][4] : "",
-          number: data[rb][5] ? String(data[rb][5]) : "",
-          klasa: data[rb][6],
-          povrsina: parseInt(data[rb][7]),
-          vlasnistvo: data[rb][9] ? data[rb][9] : "",
+          ko: data[rb][4],
+          potes: data[rb][5] ? data[rb][5] : "",
+          number: data[rb][6] ? String(data[rb][6]) : "",
+          klasa: data[rb][7],
+          povrsina: parseInt(data[rb][8]),
+          vlasnistvo: data[rb][10] ? data[rb][10] : "",
         },
       });
       rb += 1;

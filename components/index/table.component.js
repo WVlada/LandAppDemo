@@ -32,6 +32,15 @@ const TableComponent = ({ data }) => {
       return y;
     }
   };
+  const sumOfAll = ()=>{
+    let s = 0;
+    data.map((e)=>{
+      if (e.selected){
+        s+= e._sum.povrsina
+      }
+    })
+    return s
+  }
   return (
     <Table
       className="text-xs md:text-lg"
@@ -58,35 +67,39 @@ const TableComponent = ({ data }) => {
       </Thead>
       <Tbody>
         {data.map((s, index) => {
-          return (
-            <Tr key={index}>
-              <Td p={[1, 5]}>{s.vlasnistvo}</Td>
-              <Td textAlign="right" p={[1, 5]}>
-                {formatNumber(s._sum.povrsina)}
-              </Td>
-              <Td p={[1, 5]} isNumeric>
-                {formatNumber(s._sum.povrsina)}
-              </Td>
-              <Td p={[1, 5]} isNumeric>
-                {formatNumber(s._sum.povrsina)}
-              </Td>
-            </Tr>
-          );
+          if (!s.selected) {
+            return;
+          } else {
+            return (
+              <Tr key={index}>
+                <Td p={[1, 5]}>{s.vlasnistvo}</Td>
+                <Td textAlign="right" p={[1, 5]}>
+                  {formatNumber(s._sum.povrsina)}
+                </Td>
+                <Td p={[1, 5]} isNumeric>
+                  {formatNumber(s._sum.povrsina)}
+                </Td>
+                <Td p={[1, 5]} isNumeric>
+                  {formatNumber(s._sum.povrsina)}
+                </Td>
+              </Tr>
+            );
+          }
         })}
       </Tbody>
       <Tfoot>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
-            Opština
+          <p className="lowercase">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-            Površina
+            <p className="lowercase">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-            Hipoteka
+          <p className="lowercase">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-            Slobodno
+          <p className="lowercase">{formatNumber(sumOfAll())}</p>
           </Th>
         </Tr>
       </Tfoot>

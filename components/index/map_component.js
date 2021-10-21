@@ -70,7 +70,7 @@ const Map = () => {
         imgWidth={mapa_width}
         onClick={(area) => console.log(area)}
         onMouseEnter={(area) => {
-          console.log(area.center);
+          //console.log(area.center);
         }}
         onLoad={() => {
           handleLoad();
