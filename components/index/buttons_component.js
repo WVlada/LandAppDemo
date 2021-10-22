@@ -12,14 +12,14 @@ const LeftButtons = ({ data, handleCheckClick  }) => {
             className="truncate overflow-ellipsis"
             p={[1, 2]}
             h={5}
-            key={s.vlasnistvo}
+            key={s._id}
             fontSize={[12, 16]}
             mt={[0,5]}
-            value={s.vlasnistvo}
+            value={s._id}
             isChecked={s.selected}
             onChange={(e) => handleCheckClick(e.currentTarget.value)}
           >
-            {s.vlasnistvo}
+            {s._id}
           </Checkbox>
         );
       })}

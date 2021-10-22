@@ -36,7 +36,7 @@ const TableComponent = ({ data }) => {
     let s = 0;
     data.map((e)=>{
       if (e.selected){
-        s+= e._sum.povrsina
+        s+= e.sum
       }
     })
     return s
@@ -52,7 +52,7 @@ const TableComponent = ({ data }) => {
       <Thead>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
-            Opština
+            Vlasnik
           </Th>
           <Th textAlign="center" p={[1, 5]}>
             Površina
@@ -72,15 +72,15 @@ const TableComponent = ({ data }) => {
           } else {
             return (
               <Tr key={index}>
-                <Td p={[1, 5]}>{s.vlasnistvo}</Td>
+                <Td p={[1, 5]}>{s._id}</Td>
                 <Td textAlign="right" p={[1, 5]}>
-                  {formatNumber(s._sum.povrsina)}
+                  {formatNumber(s.sum)}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(s._sum.povrsina)}
+                  {formatNumber(s.sum)}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(s._sum.povrsina)}
+                  {formatNumber(s.sum)}
                 </Td>
               </Tr>
             );
@@ -90,16 +90,16 @@ const TableComponent = ({ data }) => {
       <Tfoot>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase">{formatNumber(sumOfAll())}</p>
+          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-            <p className="lowercase">{formatNumber(sumOfAll())}</p>
+            <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase">{formatNumber(sumOfAll())}</p>
+          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase">{formatNumber(sumOfAll())}</p>
+          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
           </Th>
         </Tr>
       </Tfoot>
