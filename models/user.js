@@ -4,8 +4,13 @@ var Schema = mongoose.Schema;
 var user = new Schema({
   name: {
     type: String,
-    required: false,
+    required: true,
     default: "",
+  },
+  admin: {
+    type: String,
+    required: true,
+    default: false,
   },
 });
 

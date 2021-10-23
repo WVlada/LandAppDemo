@@ -15,57 +15,92 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 
-const Map = () => {
+const Map = ({ opstine }) => {
   let [layout, setLayout] = useState(0);
   let [ratio, setRatio] = useState(0);
+  let [height, setHeight] = useState(0);
+  let [ratioH, setRatioH] = useState(0);
   let mapa_width = mapa.width;
+  let mapa_height = mapa.height;
   const { onOpen, onClose, isOpen } = useDisclosure();
-  
+
   useEffect(() => {
     window.addEventListener("load", function () {
       layout = document.getElementById("map-layout").offsetWidth;
+      height = document.getElementById("map-layout").offsetHeight;
       setLayout(layout);
-      setRatio(layout/mapa_width)
+      setHeight(height);
+      setRatioH(height / mapa_height);
+      setRatio(layout / mapa_width);
     });
     window.addEventListener("resize", function () {
       layout = document.getElementById("map-layout").offsetWidth;
+      height = document.getElementById("map-layout").offsetHeight;
       setLayout(layout);
-      setRatio(layout/mapa_width);
+      setHeight(height);
+      setRatioH(height / mapa_height);
+      setRatio(layout / mapa_width);
     });
   }, []);
-  
-  const handleLoad = ()=>{
-    onOpen()
-  }   
+  const formatNumber = (number) => {
+    const x = String(number);
+    if (number > 10000) {
+      let y = x.split("");
+      y.splice(y.length - 4, 0, "h ");
+      y.splice(y.length - 2, 0, "a ");
+      y.splice(y.length, 0, "m ");
+      return y;
+    } else if (number > 100) {
+      let y = x.split("");
+      y.splice(y.length - 2, 0, "a ");
+      y.splice(y.length, 0, "m ");
+      return y;
+    } else {
+      let y = x.split("");
+      y.splice(y.length, 0, "m ");
+      return y;
+    }
+  };
+  //const [opstineSrednjeno, setOpstineSredjeno] = useState(Object.keys(opstine));
+  //useEffect(() => {
+  //  let newOpstine = Object.keys(opstine);
+  //  setOpstineSredjeno(newOpstine);
+  //}, [opstine]);
+  const handleLoad = () => {
+    onOpen();
+  };
   return (
-    <div id="map-layout" className="w-full min-w-0 h-auto flex flex-1">
-      {coords.opstine.map((e) => {
-        return (
-          <Popover
-            key={e.name}
-            id={1}
-            isOpen={isOpen}
-            nOpen={onOpen}
-            onClose={onClose}
-            placement="right"
-            closeOnBlur={false}
-            w={0}
-            className=""
-          >
-            <PopoverContent
-              w={[20, 40]}
-              className="text-xs md:text-xl"
-              borderWidth={[1, 2]}
-              borderColor={e.strokeColor}
-              top={e.top * ratio}
-              left={e.left * ratio}
-              p={[1, 2]}
-            >
-              eweqweqwe
-            </PopoverContent>
-          </Popover>
-        );
-      })}
+    <div id="map-layout" className="w-full min-w-0 h-auto flex flex-1 mt-6">
+      <Popover
+        id={`${1}-menu-id`}
+        key={1}
+        isOpen={true}
+        nOpen={onOpen}
+        onClose={onClose}
+        placement="right"
+        closeOnBlur={false}
+        className="block"
+      >
+        {coords.opstine
+          .filter((e) => Object.keys(opstine).includes(e.name))
+          .map((opstina, index) => {
+            return (
+              <PopoverContent
+                //w={[24, 40]}
+                textAlign="right"
+                className="text-xs md:text-xl max-w-max"
+                borderWidth={[1, 2]}
+                borderColor={opstina.strokeColor}
+                top={opstina.top * ratio}
+                left={opstina.left * ratio}
+                p={[1, 2]}
+                key={index}
+              >
+                {formatNumber(opstine[opstina.name].sum)}
+              </PopoverContent>
+            );
+          })}
+      </Popover>
       <ImageMapper
         imgWidth={mapa_width}
         onClick={(area) => console.log(area)}
@@ -80,7 +115,9 @@ const Map = () => {
         src={mapa.src}
         map={{
           name: "mapa vojvodine",
-          areas: coords.opstine,
+          areas: coords.opstine.filter((e) =>
+            Object.keys(opstine).includes(e.name)
+          ), //coords.opstine,
         }}
       />
     </div>

@@ -82,6 +82,7 @@ export async function getStaticProps(context) {
   const parcels = await Parcel.find({});
   let vlasnistvoSum = await Parcel.aggregate([
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
+    { $sort: { _id: -1 } },
   ]);
   let firme = {};
   let firmeArray = [];
