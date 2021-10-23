@@ -6,51 +6,76 @@ import { useState, useEffect } from "react";
 import Parcel from "../models/parcel";
 import dbConnect from "../utils/mongoose";
 
-export default function Index({ vlasnistvoSum, opstineSrednjeno }) {
-  const [data, setData] = useState(vlasnistvoSum);
+export default function Index({
+  opstineSrednjeno,
+  data,
+  firmeArray,
+  opstinePocetno,
+}) {
+  const [firme, setFirme] = useState(data);
   const [opstine, setOpstine] = useState(opstineSrednjeno);
   const handleCheckClick = (e) => {
-    let newData = [...data];
-    for (let i = 0; i < newData.length; i++) {
-      if (newData[i]._id == e) {
-        newData[i]["selected"] = !newData[i]["selected"];
-      }
-    }
-    setData(newData);
+    let newFirme = { ...firme };
+    newFirme[e]["active"] = !newFirme[e].active;
+    setFirme(newFirme);
   };
-  // update opstine hash on every data change
   useEffect(() => {
-    let newOpstine = { ...opstine };
-    let array = Object.keys(newOpstine);
-    data.map((firma) => {
-      console.log(firma._id, "je: ", firma.selected);
-      if (!firma.selected) {
-        // svuda gde je ta firma, trebam da oduzmem sve sta ima za to firmu na tom mestu
-        array.map((opstina) => {
-          if (newOpstine[opstina].vlasnici[firma._id]) {
-            newOpstine[opstina].sum -= newOpstine[opstina].vlasnici[firma._id];
-            delete newOpstine[opstina].vlasnici[firma._id];
-          }
-        });
-      }
-    });
+    let newOpstine = makeOpstineFromFirme(firme, opstinePocetno);
     setOpstine(newOpstine);
-  }, [data]);
-  console.log(opstine);
+  }, [firme, opstinePocetno]);
+  console.log("Opstine:", opstine);
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
-        <LeftButtons data={data} handleCheckClick={handleCheckClick} />
+        <LeftButtons
+          handleCheckClick={handleCheckClick}
+          firme={firme}
+          firmeArray={firmeArray}
+        />
         <Map opstine={opstine} />
       </div>
 
       <div className="flex flex-col flex-1">
         <FileUploadForm />
-        <TableComponent data={data} />
+        <TableComponent firme={firme} firmeArray={firmeArray} />
       </div>
     </div>
   );
 }
+
+const makeOpstineFromFirme = (firme, opstine) => {
+  // opstine: [
+  //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Đ.N.' }, sum: 116094 },
+  //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Ribnjak Sutjeska' },
+  //  sum: 9202252
+  //} Vlsnisto sum: [
+  // { _id: 'Đ.N.', sum: 975848, selected: true },
+  // { _id: 'Greenco Eko Park', sum: 902694, selected: true },
+  let firmeArray = Object.keys(firme);
+  let opstineSrednjeno = {};
+  opstine.map((o, index) => {
+    if (firme[o._id["vlasnistvo"]]["active"]) {
+      if (opstineSrednjeno[o._id["opstina"]]) {
+        if (opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id]) {
+          opstineSrednjeno[o._id["opstina"]].sum += o.sum;
+          opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] +=
+            o.sum;
+        } else {
+          opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] =
+            o.sum;
+          opstineSrednjeno[o._id["opstina"]].sum += o.sum;
+        }
+      } else {
+        opstineSrednjeno[o._id["opstina"]] = {
+          sum: o.sum,
+          vlasnici: { [`${o._id.vlasnistvo}`]: o.sum },
+        };
+      }
+    } else {
+    }
+  });
+  return opstineSrednjeno;
+};
 
 export async function getStaticProps(context) {
   await dbConnect();
@@ -58,7 +83,15 @@ export async function getStaticProps(context) {
   let vlasnistvoSum = await Parcel.aggregate([
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
   ]);
-  let opstinaSum = await Parcel.aggregate([
+  let firme = {};
+  let firmeArray = [];
+
+  vlasnistvoSum.map((e) => {
+    firme[e._id] = { active: true };
+    firme[e._id]["sum"] = e.sum;
+    firmeArray.push(e._id);
+  });
+  let opstinePocetno = await Parcel.aggregate([
     {
       $group: {
         _id: { opstina: "$opstina", vlasnistvo: "$vlasnistvo" },
@@ -66,41 +99,14 @@ export async function getStaticProps(context) {
       },
     },
   ]);
-  let opstineSrednjeno = {};
-  opstinaSum.map((o) => {
-    if (opstineSrednjeno[o._id["opstina"]]) {
-      if (opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo]) {
-        opstineSrednjeno[o._id["opstina"]].sum += o.sum;
-        opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] +=
-          o.sum;
-      } else {
-        opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] =
-          o.sum;
-        opstineSrednjeno[o._id["opstina"]].sum += o.sum;
-      }
-    } else {
-      opstineSrednjeno[o._id["opstina"]] = {
-        sum: o.sum,
-        vlasnici: { [`${o._id.vlasnistvo}`]: o.sum },
-      };
-    }
-  });
-  vlasnistvoSum.map((e) => (e.selected = true));
-  console.log("Vlsnisto sum:", vlasnistvoSum);
-  //console.log(opstinaSum);
-
-  //let zbir = 0
-  //let array = Object.keys(opstineSrednjeno)
-  //array.map((a)=>{
-  //  zbir += opstineSrednjeno[a].sum
-  //})
-  //console.log('Zbir:', zbir);
-  //console.log('array:', array);
-  console.log("Opstine sredjeno:", opstineSrednjeno);
+  const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
   return {
     props: {
       vlasnistvoSum: vlasnistvoSum,
       opstineSrednjeno: opstineSrednjeno,
+      firmeArray: firmeArray,
+      data: firme,
+      opstinePocetno: opstinePocetno,
     },
   };
 }

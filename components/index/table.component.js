@@ -11,7 +11,7 @@ import {
   TableCaption,
 } from "@chakra-ui/react";
 
-const TableComponent = ({ data }) => {
+const TableComponent = ({ firme, firmeArray }) => {
   const handleChange = () => {};
   const formatNumber = (number) => {
     const x = String(number);
@@ -32,15 +32,15 @@ const TableComponent = ({ data }) => {
       return y;
     }
   };
-  const sumOfAll = ()=>{
+  const sumOfAll = () => {
     let s = 0;
-    data.map((e)=>{
-      if (e.selected){
-        s+= e.sum
+    firmeArray.map((e) => {
+      if (firme[e].active) {
+        s += firme[e].sum;
       }
-    })
-    return s
-  }
+    });
+    return s;
+  };
   return (
     <Table
       className="text-xs md:text-lg"
@@ -66,21 +66,21 @@ const TableComponent = ({ data }) => {
         </Tr>
       </Thead>
       <Tbody>
-        {data.map((s, index) => {
-          if (!s.selected) {
+        {firmeArray.map((s, index) => {
+          if (!firme[s].active) {
             return;
           } else {
             return (
               <Tr key={index}>
-                <Td p={[1, 5]}>{s._id}</Td>
+                <Td p={[1, 5]}>{s}</Td>
                 <Td textAlign="right" p={[1, 5]}>
-                  {formatNumber(s.sum)}
+                  {formatNumber(firme[s].sum)}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(s.sum)}
+                  {formatNumber(firme[s].sum)}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(s.sum)}
+                  {formatNumber(firme[s].sum)}
                 </Td>
               </Tr>
             );
@@ -90,16 +90,24 @@ const TableComponent = ({ data }) => {
       <Tfoot>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
+            <p className="lowercase font-extrabold text-xs md:text-lg">
+              {formatNumber(sumOfAll())}
+            </p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-            <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
+            <p className="lowercase font-extrabold text-xs md:text-lg">
+              {formatNumber(sumOfAll())}
+            </p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
+            <p className="lowercase font-extrabold text-xs md:text-lg">
+              {formatNumber(sumOfAll())}
+            </p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
-          <p className="lowercase font-extrabold text-xs md:text-lg">{formatNumber(sumOfAll())}</p>
+            <p className="lowercase font-extrabold text-xs md:text-lg">
+              {formatNumber(sumOfAll())}
+            </p>
           </Th>
         </Tr>
       </Tfoot>
