@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ImageMapper, ImageMapperProps } from "react-image-mapper2";
-import mapa from "../../public/vojvodina_map.svg";
+import mapa from "../../public/vojvodina_map1.svg";
 import coords from "../../utils/vojvodina_coordinates.json";
 import {
   Popover,
@@ -26,8 +26,8 @@ const Map = ({ opstine }) => {
 
   useEffect(() => {
     window.addEventListener("load", function () {
-      layout = document.getElementById("map-layout").offsetWidth;
-      height = document.getElementById("map-layout").offsetHeight;
+      layout = document.getElementById("map-layout").offsetWidth-20;
+      height = document.getElementById("map-layout").offsetHeight-20;
       setLayout(layout);
       setHeight(height);
       setRatioH(height / mapa_height);

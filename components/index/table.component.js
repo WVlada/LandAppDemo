@@ -10,6 +10,7 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 const TableComponent = ({ firme, firmeArray }) => {
   const handleChange = () => {};
@@ -65,14 +66,16 @@ const TableComponent = ({ firme, firmeArray }) => {
           </Th>
         </Tr>
       </Thead>
-      <Tbody>
+      <Tbody >
         {firmeArray.map((s, index) => {
           if (!firme[s].active) {
             return;
           } else {
             return (
-              <Tr key={index}>
-                <Td p={[1, 5]}>{s}</Td>
+              <Tr className="cursor-pointer" key={index}>
+                <Link passHref href={`/vlasnik/${s}`} as={`/vlasnik/${s}`}>
+                  <Td p={[1, 5]}>{s}</Td>
+                </Link>
                 <Td textAlign="right" p={[1, 5]}>
                   {formatNumber(firme[s].sum)}
                 </Td>
