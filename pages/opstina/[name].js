@@ -11,7 +11,9 @@ export default function Opstina({}) {
 
 export async function getServerSideProps(context) {
   await dbConnect();
+  
   const { name } = context.params.name;
+  const parcels = await Parcel.find({vlasnik: name});
   return {
     props: {opstina: name},
   };
