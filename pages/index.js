@@ -86,12 +86,13 @@ export async function getStaticProps(context) {
   ]);
   let firme = {};
   let firmeArray = [];
-
+  
   vlasnistvoSum.map((e) => {
     firme[e._id] = { active: true };
     firme[e._id]["sum"] = e.sum;
     firmeArray.push(e._id);
   });
+  console.log(firme)
   let opstinePocetno = await Parcel.aggregate([
     {
       $group: {

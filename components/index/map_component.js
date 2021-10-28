@@ -14,34 +14,49 @@ import {
   useDisclosure,
   IconButton,
 } from "@chakra-ui/react";
+import {useRouter} from 'next/router'
 
 const Map = ({ opstine }) => {
-  let [layout, setLayout] = useState(0);
-  let [ratio, setRatio] = useState(0);
-  let [height, setHeight] = useState(0);
-  let [ratioH, setRatioH] = useState(0);
   let mapa_width = mapa.width;
   let mapa_height = mapa.height;
+  let [layout, setLayout] = useState(0);
+  let [ratio, setRatio] = useState(mapa_width/mapa_height);
+  let [height, setHeight] = useState(mapa_height);
+  let [ratioH, setRatioH] = useState(mapa_height/mapa_width);
+  
   const { onOpen, onClose, isOpen } = useDisclosure();
+  const router = useRouter();
 
   useEffect(() => {
-    window.addEventListener("load", function () {
-      layout = document.getElementById("map-layout").offsetWidth-20;
-      height = document.getElementById("map-layout").offsetHeight-20;
-      setLayout(layout);
-      setHeight(height);
-      setRatioH(height / mapa_height);
-      setRatio(layout / mapa_width);
-    });
+  //  window.addEventListener("load", function () {
+  //    layout = document.getElementById("map-layout").offsetWidth;
+  //    height = document.getElementById("map-layout").offsetHeight;
+  //    setLayout(layout);
+  //    setHeight(height);
+  //    setRatioH(mapa_height/ height);
+  //    setRatio(layout / mapa_width);
+  //  });
     window.addEventListener("resize", function () {
       layout = document.getElementById("map-layout").offsetWidth;
       height = document.getElementById("map-layout").offsetHeight;
       setLayout(layout);
       setHeight(height);
-      setRatioH(height / mapa_height);
+      setRatioH(mapa_height/ height);
       setRatio(layout / mapa_width);
     });
   }, []);
+  useEffect(()=>{
+    setTimeout(()=>{
+      layout = document.getElementById("map-layout").offsetWidth;
+      height = document.getElementById("map-layout").offsetHeight;
+      setLayout(layout);
+      setHeight(height);
+      setRatioH( mapa_height/ height);
+      setRatio(layout / mapa_width);
+      console.log("router called")
+    }, 100)
+      
+  }, [router])
   const formatNumber = (number) => {
     const x = String(number);
     if (number > 10000) {
@@ -70,7 +85,7 @@ const Map = ({ opstine }) => {
     onOpen();
   };
   return (
-    <div id="map-layout" className="w-full min-w-0 h-auto flex flex-1 mt-6">
+    <div id="map-layout" className="w-full min-w-0 h-full flex flex-col flex-1 mt-6 ">
       <Popover
         id={`${1}-menu-id`}
         key={1}
@@ -102,8 +117,9 @@ const Map = ({ opstine }) => {
           })}
       </Popover>
       <ImageMapper
+      className="flex"
         imgWidth={mapa_width}
-        onClick={(area) => console.log(area)}
+        onClick={(area) => router.push(`/opstina/${area.name}`)}
         onMouseEnter={(area) => {
           //console.log(area.center);
         }}
@@ -112,6 +128,7 @@ const Map = ({ opstine }) => {
         }}
         active
         width={layout}
+        //height={height*ratioH}
         src={mapa.src}
         map={{
           name: "mapa vojvodine",
