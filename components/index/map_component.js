@@ -14,49 +14,37 @@ import {
   useDisclosure,
   IconButton,
 } from "@chakra-ui/react";
-import {useRouter} from 'next/router'
+import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
 const Map = ({ opstine }) => {
   let mapa_width = mapa.width;
   let mapa_height = mapa.height;
   let [layout, setLayout] = useState(0);
-  let [ratio, setRatio] = useState(mapa_width/mapa_height);
-  let [height, setHeight] = useState(mapa_height);
-  let [ratioH, setRatioH] = useState(mapa_height/mapa_width);
-  
+  let [ratio, setRatio] = useState(mapa_width / mapa_height);
+
   const { onOpen, onClose, isOpen } = useDisclosure();
   const router = useRouter();
 
+  const appear = {
+    hidden: { opacity: 0, x: 0, y: 0 },
+    enter: { opacity: 1, x: 0, y: 0 },
+    exit: { opacity: 0, x: 0, y: 0 },
+  };
+
   useEffect(() => {
-  //  window.addEventListener("load", function () {
-  //    layout = document.getElementById("map-layout").offsetWidth;
-  //    height = document.getElementById("map-layout").offsetHeight;
-  //    setLayout(layout);
-  //    setHeight(height);
-  //    setRatioH(mapa_height/ height);
-  //    setRatio(layout / mapa_width);
-  //  });
     window.addEventListener("resize", function () {
       layout = document.getElementById("map-layout").offsetWidth;
-      height = document.getElementById("map-layout").offsetHeight;
       setLayout(layout);
-      setHeight(height);
-      setRatioH(mapa_height/ height);
       setRatio(layout / mapa_width);
     });
   }, []);
-  useEffect(()=>{
-    setTimeout(()=>{
-      layout = document.getElementById("map-layout").offsetWidth;
-      height = document.getElementById("map-layout").offsetHeight;
-      setLayout(layout);
-      setHeight(height);
-      setRatioH( mapa_height/ height);
-      setRatio(layout / mapa_width);
-      console.log("router called")
-    }, 100)
-      
-  }, [router])
+
+  useEffect(() => {
+    layout = document.getElementById("map-layout").offsetWidth;
+    setLayout(layout);
+    setRatio(layout / mapa_width);
+  }, []);
   const formatNumber = (number) => {
     const x = String(number);
     if (number > 10000) {
@@ -85,58 +73,71 @@ const Map = ({ opstine }) => {
     onOpen();
   };
   return (
-    <div id="map-layout" className="w-full min-w-0 h-full flex flex-col flex-1 mt-6 ">
-      <Popover
-        id={`${1}-menu-id`}
-        key={1}
-        isOpen={true}
-        nOpen={onOpen}
-        onClose={onClose}
-        placement="right"
-        closeOnBlur={false}
-        className="block"
+    <div
+      id="map-layout"
+      className="w-full min-w-0 h-full flex flex-col flex-1 mt-6 "
+    >
+      <motion.div
+        variants={appear}
+        initial="hidden"
+        animate="enter"
+        exit="exit"
+        transition={{ type: "easeIn", duration: 1 }}
+        className="flex flex-col"
       >
-        {coords.opstine
-          .filter((e) => Object.keys(opstine).includes(e.name))
-          .map((opstina, index) => {
-            return (
-              <PopoverContent
-                //w={[24, 40]}
-                textAlign="right"
-                className="text-xs md:text-xl max-w-max"
-                borderWidth={[1, 2]}
-                borderColor={opstina.strokeColor}
-                top={opstina.top * ratio}
-                left={opstina.left * ratio}
-                p={[1, 2]}
-                key={index}
-              >
-                {formatNumber(opstine[opstina.name].sum)}
-              </PopoverContent>
-            );
-          })}
-      </Popover>
-      <ImageMapper
-      className="flex"
-        imgWidth={mapa_width}
-        onClick={(area) => router.push(`/opstina/${area.name}`)}
-        onMouseEnter={(area) => {
-          //console.log(area.center);
-        }}
-        onLoad={() => {
-          handleLoad();
-        }}
-        active
-        width={layout}
-        //height={height*ratioH}
-        src={mapa.src}
-        map={{
-          name: "mapa vojvodine",
-          areas: coords.opstine.filter((e) =>
-            Object.keys(opstine).includes(e.name)
-          ), //coords.opstine,
-        }}
-      />
+        <Popover
+          id={`${1}-menu-id`}
+          key={1}
+          isOpen={true}
+          nOpen={onOpen}
+          onClose={onClose}
+          placement="right"
+          closeOnBlur={false}
+          className="block"
+        >
+          {coords.opstine
+            .filter((e) => Object.keys(opstine).includes(e.name))
+            .map((opstina, index) => {
+              return (
+                <PopoverContent
+                  //w={[24, 40]}
+                  textAlign="right"
+                  className="text-xs md:text-xl max-w-max"
+                  borderWidth={[1, 2]}
+                  borderColor={opstina.strokeColor}
+                  top={opstina.top * ratio}
+                  left={opstina.left * ratio}
+                  p={[1, 2]}
+                  key={index}
+                >
+                  {formatNumber(opstine[opstina.name].sum)}
+                </PopoverContent>
+              );
+            })}
+        </Popover>
+
+        <ImageMapper
+          className="flex"
+          imgWidth={mapa_width}
+          onClick={(area) => router.push(`/opstina/${area.name}`)}
+          onMouseEnter={(area) => {
+            //console.log(area.center);
+          }}
+          onLoad={() => {
+            handleLoad();
+          }}
+          active
+          width={layout}
+          height={layout * (mapa_height / mapa_width)}
+          src={mapa.src}
+          map={{
+            name: "mapa vojvodine",
+            areas: coords.opstine.filter((e) =>
+              Object.keys(opstine).includes(e.name)
+            ), //coords.opstine,
+          }}
+        />
+      </motion.div>
     </div>
   );
 };
