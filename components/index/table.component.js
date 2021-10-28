@@ -48,6 +48,7 @@ const TableComponent = ({ firme, firmeArray }) => {
       variant="striped"
       colorScheme="gray"
       mt={[2, 10]}
+      w="100%"
     >
       <TableCaption>Pregled svog zemljišta</TableCaption>
       <Thead>
