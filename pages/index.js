@@ -11,6 +11,7 @@ export default function Index({
   data,
   firmeArray,
   opstinePocetno,
+  hipoteke
 }) {
   const [firme, setFirme] = useState(data);
   const [opstine, setOpstine] = useState(opstineSrednjeno);
@@ -23,7 +24,7 @@ export default function Index({
     let newOpstine = makeOpstineFromFirme(firme, opstinePocetno);
     setOpstine(newOpstine);
   }, [firme, opstinePocetno]);
-  console.log("Opstine:", opstine);
+  //console.log("Opstine:", opstine);
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
@@ -37,13 +38,14 @@ export default function Index({
 
       <div className="flex flex-col flex-1">
         <FileUploadForm />
-        <TableComponent firme={firme} firmeArray={firmeArray} />
+        <TableComponent hipoteke={hipoteke} firme={firme} firmeArray={firmeArray} />
       </div>
     </div>
   );
 }
 
 const makeOpstineFromFirme = (firme, opstine) => {
+  //console.log(opstine)
   // opstine: [
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Đ.N.' }, sum: 116094 },
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Ribnjak Sutjeska' },
@@ -60,20 +62,24 @@ const makeOpstineFromFirme = (firme, opstine) => {
           opstineSrednjeno[o._id["opstina"]].sum += o.sum;
           opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] +=
             o.sum;
+            //opstineSrednjeno[o._id["opstina"]].hipoteka += o.hipoteka_1 ? o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0;
         } else {
           opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] =
             o.sum;
           opstineSrednjeno[o._id["opstina"]].sum += o.sum;
+          //opstineSrednjeno[o._id["opstina"]].hipoteka += o.hipoteka_1 ? o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0;
         }
       } else {
         opstineSrednjeno[o._id["opstina"]] = {
           sum: o.sum,
-          vlasnici: { [`${o._id.vlasnistvo}`]: o.sum },
+          vlasnici: { [`${o._id.vlasnistvo}`]: o.sum},
+          //hipoteka: (o.hipoteka_1 || o.hipoteka_2) ? o. o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0 ,
         };
       }
     } else {
     }
   });
+  //console.log(opstineSrednjeno)
   return opstineSrednjeno;
 };
 
@@ -92,7 +98,7 @@ export async function getStaticProps(context) {
     firme[e._id]["sum"] = e.sum;
     firmeArray.push(e._id);
   });
-  console.log(firme)
+  //console.log(firme)
   let opstinePocetno = await Parcel.aggregate([
     {
       $group: {
@@ -101,6 +107,27 @@ export async function getStaticProps(context) {
       },
     },
   ]);
+  let hipotekePocetno = await Parcel.aggregate([
+    {
+      $group: {
+        _id: { vlasnistvo: "$vlasnistvo", hipoteka_1: "$hipoteka_1", hipoteka_2: "$hipoteka_2" },
+        sum: { $sum: "$povrsina" },
+      },
+    },
+  ]);
+  const hipoteke = {}
+  hipotekePocetno.map((red)=>{
+    if(red._id.hipoteka_1 != '' || red._id.hipoteka_2 != '' )
+    {
+      if(hipoteke[red._id.vlasnistvo]) 
+      hipoteke[red._id.vlasnistvo] += red.sum
+      else{
+        hipoteke[red._id.vlasnistvo] = red.sum
+      }
+    }
+  })
+  //console.log(hipotekePocetno)
+  //console.log(hipoteke)
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
   return {
     props: {
@@ -109,6 +136,7 @@ export async function getStaticProps(context) {
       firmeArray: firmeArray,
       data: firme,
       opstinePocetno: opstinePocetno,
+      hipoteke: hipoteke
     },
   };
 }

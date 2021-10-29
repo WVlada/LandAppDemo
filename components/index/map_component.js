@@ -33,11 +33,18 @@ const Map = ({ opstine }) => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", function () {
+    let handler = ()=> {
       layout = document.getElementById("map-layout").offsetWidth;
       setLayout(layout);
       setRatio(layout / mapa_width);
-    });
+    }
+    window.addEventListener("resize", handler)
+    //window.addEventListener("resize", function () {
+    //  layout = document.getElementById("map-layout").offsetWidth;
+    //  setLayout(layout);
+    //  setRatio(layout / mapa_width);
+    //});
+    return () => window.removeEventListener('resize', handler)
   }, []);
 
   useEffect(() => {
@@ -82,7 +89,7 @@ const Map = ({ opstine }) => {
         initial="hidden"
         animate="enter"
         exit="exit"
-        transition={{ type: "easeIn", duration: 1 }}
+        transition={{ type: "easeIn", duration: 0.5 }}
         className="flex flex-col"
       >
         <Popover

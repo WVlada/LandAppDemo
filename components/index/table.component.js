@@ -12,8 +12,15 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-const TableComponent = ({ firme, firmeArray }) => {
+const TableComponent = ({ firme, firmeArray, hipoteke }) => {
   const handleChange = () => {};
+  const keys = Object.keys(hipoteke)
+  let hipoteke_sum = 0;
+  keys.map((key)=>{
+    if(hipoteke[key]){
+      hipoteke_sum += hipoteke[key]
+    }
+  }) 
   const formatNumber = (number) => {
     const x = String(number);
     if (number > 10000) {
@@ -67,7 +74,7 @@ const TableComponent = ({ firme, firmeArray }) => {
           </Th>
         </Tr>
       </Thead>
-      <Tbody >
+      <Tbody>
         {firmeArray.map((s, index) => {
           if (!firme[s].active) {
             return;
@@ -81,10 +88,12 @@ const TableComponent = ({ firme, firmeArray }) => {
                   {formatNumber(firme[s].sum)}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(firme[s].sum)}
+                  {hipoteke[s] ? formatNumber(hipoteke[s]) : 0}
                 </Td>
                 <Td p={[1, 5]} isNumeric>
-                  {formatNumber(firme[s].sum)}
+                  {hipoteke[s]
+                    ? formatNumber(firme[s].sum - hipoteke[s])
+                    : formatNumber(firme[s].sum)}
                 </Td>
               </Tr>
             );
@@ -94,9 +103,7 @@ const TableComponent = ({ firme, firmeArray }) => {
       <Tfoot>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
-            <p className="lowercase font-extrabold text-xs md:text-lg">
-              {formatNumber(sumOfAll())}
-            </p>
+            <p className="lowercase font-extrabold text-xs md:text-lg"></p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
             <p className="lowercase font-extrabold text-xs md:text-lg">
@@ -105,12 +112,12 @@ const TableComponent = ({ firme, firmeArray }) => {
           </Th>
           <Th textAlign="center" p={[1, 5]}>
             <p className="lowercase font-extrabold text-xs md:text-lg">
-              {formatNumber(sumOfAll())}
+              {formatNumber(hipoteke_sum)}
             </p>
           </Th>
           <Th textAlign="center" p={[1, 5]}>
             <p className="lowercase font-extrabold text-xs md:text-lg">
-              {formatNumber(sumOfAll())}
+              {formatNumber(sumOfAll()-hipoteke_sum)}
             </p>
           </Th>
         </Tr>
