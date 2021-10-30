@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
+import {formatNumber} from "../../utils/utils";
 
 const Map = ({ opstine }) => {
   let mapa_width = mapa.width;
@@ -52,25 +53,6 @@ const Map = ({ opstine }) => {
     setLayout(layout);
     setRatio(layout / mapa_width);
   }, []);
-  const formatNumber = (number) => {
-    const x = String(number);
-    if (number > 10000) {
-      let y = x.split("");
-      y.splice(y.length - 4, 0, "h ");
-      y.splice(y.length - 2, 0, "a ");
-      y.splice(y.length, 0, "m ");
-      return y;
-    } else if (number > 100) {
-      let y = x.split("");
-      y.splice(y.length - 2, 0, "a ");
-      y.splice(y.length, 0, "m ");
-      return y;
-    } else {
-      let y = x.split("");
-      y.splice(y.length, 0, "m ");
-      return y;
-    }
-  };
   //const [opstineSrednjeno, setOpstineSredjeno] = useState(Object.keys(opstine));
   //useEffect(() => {
   //  let newOpstine = Object.keys(opstine);
@@ -114,7 +96,7 @@ const Map = ({ opstine }) => {
                   borderColor={opstina.strokeColor}
                   top={opstina.top * ratio}
                   left={opstina.left * ratio}
-                  p={[1, 2]}
+                  p={[0.5, 1]}
                   key={index}
                 >
                   {formatNumber(opstine[opstina.name].sum)}

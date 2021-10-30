@@ -11,6 +11,7 @@ import {
   TableCaption,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import {formatNumber} from '../../utils/utils' 
 
 const TableComponent = ({ firme, firmeArray, hipoteke }) => {
   const handleChange = () => {};
@@ -21,25 +22,6 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
       hipoteke_sum += hipoteke[key]
     }
   }) 
-  const formatNumber = (number) => {
-    const x = String(number);
-    if (number > 10000) {
-      let y = x.split("");
-      y.splice(y.length - 4, 0, "h ");
-      y.splice(y.length - 2, 0, "a ");
-      y.splice(y.length, 0, "m ");
-      return y;
-    } else if (number > 100) {
-      let y = x.split("");
-      y.splice(y.length - 2, 0, "a ");
-      y.splice(y.length, 0, "m ");
-      return y;
-    } else {
-      let y = x.split("");
-      y.splice(y.length, 0, "m ");
-      return y;
-    }
-  };
   const sumOfAll = () => {
     let s = 0;
     firmeArray.map((e) => {
@@ -57,7 +39,7 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
       mt={[2, 10]}
       w="100%"
     >
-      <TableCaption>Pregled svog zemljišta</TableCaption>
+      <TableCaption placement="top">Pregled svog zemljišta</TableCaption>
       <Thead>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>

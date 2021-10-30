@@ -18,8 +18,12 @@ import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
 import coords from "../../utils/vojvodina_coordinates.json";
 
-export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
-  const parcels = JSON.parse(parcelsJSON);
+export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog_reda }) {
+  //const parcels = JSON.parse(parcelsJSON)
+  console.log(vlasnik);
+  //console.log( parcelsJSON);
+  console.log(sum);
+  console.log(opstine);
   return (
     <div className="flex flex-col flex-1">
       <Map opstine={opstine} />
@@ -29,7 +33,9 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
         colorScheme="gray"
         mt={[2, 10]}
       >
-        <TableCaption>Pregled svog zemljišta</TableCaption>
+        <TableCaption placement="top">
+          Pregled svog zemljišta vlasnika: {vlasnik}
+        </TableCaption>
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
@@ -49,28 +55,30 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
         <Tbody>
           {Object.keys(opstine).map((opstina, index) => {
             return (
-              <Tr
-                style={{
-                  backgroundColor:
-                    coords.opstine.filter((e) => e.name == opstina).length > 0
-                      ? coords.opstine.filter((e) => e.name == opstina)[0]
-                          .preFillColor
-                      : "",
-                }}
-                className="cursor-pointer"
-                key={index}
-              >
-                <Td p={[1, 5]}>{opstina}</Td>
-                <Td textAlign="right" p={[1, 5]}>
-                  {formatNumber(opstine[opstina].sum)}
-                </Td>
-                <Td p={[1, 5]} isNumeric>
-                  {formatNumber(opstine[opstina].sum)}
-                </Td>
-                <Td p={[1, 5]} isNumeric>
-                  {formatNumber(opstine[opstina].sum)}
-                </Td>
-              </Tr>
+              <Link key={index} href={`/vlasnik/${opstina}/${vlasnik}`}>
+                <Tr
+                  style={{
+                    backgroundColor:
+                      coords.opstine.filter((e) => e.name == opstina).length > 0
+                        ? coords.opstine.filter((e) => e.name == opstina)[0]
+                            .preFillColor
+                        : "",
+                  }}
+                  className="cursor-pointer"
+                  key={index}
+                >
+                  <Td p={[2, 5]}>{opstina}</Td>
+                  <Td textAlign="right" p={[2, 5]}>
+                    {formatNumber(opstine[opstina].sum)}
+                  </Td>
+                  <Td p={[2, 5]} isNumeric>
+                    {formatNumber(opstine[opstina].sum)}
+                  </Td>
+                  <Td p={[2, 5]} isNumeric>
+                    {formatNumber(opstine[opstina].sum)}
+                  </Td>
+                </Tr>
+              </Link>
             );
           })}
         </Tbody>
@@ -78,7 +86,76 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
+                {/*formatNumber(sum)*/}
+              </p>
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              <p className="lowercase font-extrabold text-xs md:text-lg">
                 {formatNumber(sum)}
+              </p>
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              <p className="lowercase font-extrabold text-xs md:text-lg">
+                {formatNumber(sum)}
+              </p>
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              <p className="lowercase font-extrabold text-xs md:text-lg">
+                {formatNumber(sum)}
+              </p>
+            </Th>
+          </Tr>
+        </Tfoot>
+      </Table>
+      <div></div>
+      <Table
+        className="text-xs md:text-lg"
+        variant="simple"
+        colorScheme="gray"
+        mt={[2, 10]}
+      >
+        <TableCaption placement="top">Pregled hipoteka</TableCaption>
+        <Thead>
+          <Tr>
+            <Th textAlign="center" p={[1, 5]}>
+              Hipoteka
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              U korist:
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              Povrsina
+            </Th>
+            <Th textAlign="center" p={[1, 5]}>
+              Slobodno
+            </Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {Object.keys(hipoteke).map((hipoteka, index) => {
+            return (
+              <Link key={index} href="/">
+                <Tr style={{}} className="cursor-pointer" key={index}>
+                  <Td p={[2, 5]}>{hipoteka}</Td>
+                  <Td textAlign="right" p={[2, 5]}>
+                    {formatNumber(hipoteke[hipoteka])}
+                  </Td>
+                  <Td p={[2, 5]} isNumeric>
+                    {formatNumber(hipoteke[hipoteka])}
+                  </Td>
+                  <Td p={[2, 5]} isNumeric>
+                    {formatNumber(hipoteke[hipoteka])}
+                  </Td>
+                </Tr>
+              </Link>
+            );
+          })}
+        </Tbody>
+        <Tfoot>
+          <Tr>
+            <Th textAlign="center" p={[1, 5]}>
+              <p className="lowercase font-extrabold text-xs md:text-lg">
+                {/*formatNumber(sum)*/}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
@@ -105,7 +182,6 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
 
 export async function getServerSideProps(context) {
   await dbConnect();
-
   const { name } = context.params;
   const parcels = await Parcel.find({ vlasnistvo: name });
   //let opstineSum = await Parcel.aggregate([
@@ -139,12 +215,39 @@ export async function getServerSideProps(context) {
     },
   ]);
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
+  let hipoteke = {};
+  let hipoteke_drugog_reda = {};
+  parcels.map((parcel) => {
+    if (parcel.hipoteka_1) {
+      if (hipoteke[parcel.hipoteka_1]) {
+        hipoteke[parcel.hipoteka_1] += parcel.povrsina;
+      } else {
+        hipoteke[parcel.hipoteka_1] = parcel.povrsina;
+      }
+    }
+    if (parcel.hipoteka_2) {
+      if (hipoteke[parcel.hipoteka_2]) {
+        hipoteke[parcel.hipoteka_2] += parcel.povrsina;
+      } else {
+        hipoteke[parcel.hipoteka_2] = parcel.povrsina;
+      }
+      if (hipoteke_drugog_reda[parcel.hipoteka_2]) {
+        hipoteke_drugog_reda[parcel.hipoteka_2] += parcel.povrsina;
+      } else {
+        hipoteke_drugog_reda[parcel.hipoteka_2] = parcel.povrsina;
+      }
+    }
+  });
+  console.log("Hipoteke:", hipoteke);
+  console.log("Hipoteke 2 reda:", hipoteke_drugog_reda);
   return {
     props: {
       vlasnik: name,
-      parcelsJSON: JSON.stringify(parcels),
+      //parcelsJSON: JSON.stringify(parcels),
       sum: sum,
       opstine: opstineSrednjeno,
+      hipoteke: hipoteke,
+      hipoteke_drugog_reda: hipoteke_drugog_reda
     },
   };
 }
