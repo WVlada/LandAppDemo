@@ -7,13 +7,13 @@ export const formatNumber = (number) => {
     y.splice(y.length - 2, 0, "a ");
     y.splice(y.length, 0, "m ");
     return y;
-  } else if (number > 10000) {
+  } else if (number > 9999) {
     let y = x.split("");
     y.splice(y.length - 4, 0, "h ");
     y.splice(y.length - 2, 0, "a ");
     y.splice(y.length, 0, "m ");
     return y;
-  } else if (number > 100) {
+  } else if (number > 99) {
     let y = x.split("");
     y.splice(y.length - 2, 0, "a ");
     y.splice(y.length, 0, "m ");
@@ -26,6 +26,7 @@ export const formatNumber = (number) => {
 };
 
 export const makeOpstineFromFirme = (firme, opstine) => {
+  console.log(opstine)
   // opstine: [
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Đ.N.' }, sum: 116094 },
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Ribnjak Sutjeska' },

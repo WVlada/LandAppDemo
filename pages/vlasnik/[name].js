@@ -209,12 +209,14 @@ export async function getServerSideProps(context) {
   let opstinePocetno = await Parcel.aggregate([
     {
       $group: {
-        _id: { opstina: "$opstina", vlasnistvo: "$vlasnistvo" },
+        _id: { opstina: "$opstina", vlasnistvo: "$vlasnistvo", hipoteka_1: "$hipoteka_1" },
         sum: { $sum: "$povrsina" },
       },
     },
   ]);
+  //console.log("opstinePocetno:", opstinePocetno);
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
+  console.log("opstineSrednjeno:", opstineSrednjeno);
   let hipoteke = {};
   let hipoteke_drugog_reda = {};
   parcels.map((parcel) => {

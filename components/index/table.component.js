@@ -39,7 +39,7 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
       mt={[2, 10]}
       w="100%"
     >
-      <TableCaption placement="top">Pregled svog zemljišta</TableCaption>
+      <TableCaption className="uppercase" placement="top">Pregled zemljišta</TableCaption>
       <Thead>
         <Tr>
           <Th textAlign="center" p={[1, 5]}>
