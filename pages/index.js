@@ -11,7 +11,7 @@ export default function Index({
   data,
   firmeArray,
   opstinePocetno,
-  hipoteke
+  hipoteke,
 }) {
   const [firme, setFirme] = useState(data);
   const [opstine, setOpstine] = useState(opstineSrednjeno);
@@ -38,7 +38,11 @@ export default function Index({
 
       <div className="flex flex-col flex-1">
         <FileUploadForm />
-        <TableComponent hipoteke={hipoteke} firme={firme} firmeArray={firmeArray} />
+        <TableComponent
+          hipoteke={hipoteke}
+          firme={firme}
+          firmeArray={firmeArray}
+        />
       </div>
     </div>
   );
@@ -62,7 +66,7 @@ const makeOpstineFromFirme = (firme, opstine) => {
           opstineSrednjeno[o._id["opstina"]].sum += o.sum;
           opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] +=
             o.sum;
-            //opstineSrednjeno[o._id["opstina"]].hipoteka += o.hipoteka_1 ? o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0;
+          //opstineSrednjeno[o._id["opstina"]].hipoteka += o.hipoteka_1 ? o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0;
         } else {
           opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id.vlasnistvo] =
             o.sum;
@@ -72,7 +76,7 @@ const makeOpstineFromFirme = (firme, opstine) => {
       } else {
         opstineSrednjeno[o._id["opstina"]] = {
           sum: o.sum,
-          vlasnici: { [`${o._id.vlasnistvo}`]: o.sum},
+          vlasnici: { [`${o._id.vlasnistvo}`]: o.sum },
           //hipoteka: (o.hipoteka_1 || o.hipoteka_2) ? o. o.hipoteka_1 : 0  + o.hipoteka_2 ? o.hipoteka_2 : 0 ,
         };
       }
@@ -85,20 +89,17 @@ const makeOpstineFromFirme = (firme, opstine) => {
 
 export async function getStaticProps(context) {
   await dbConnect();
-  const parcels = await Parcel.find({});
   let vlasnistvoSum = await Parcel.aggregate([
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
     { $sort: { _id: -1 } },
   ]);
   let firme = {};
   let firmeArray = [];
-  
   vlasnistvoSum.map((e) => {
     firme[e._id] = { active: true };
     firme[e._id]["sum"] = e.sum;
     firmeArray.push(e._id);
   });
-  //console.log(firme)
   let opstinePocetno = await Parcel.aggregate([
     {
       $group: {
@@ -110,24 +111,24 @@ export async function getStaticProps(context) {
   let hipotekePocetno = await Parcel.aggregate([
     {
       $group: {
-        _id: { vlasnistvo: "$vlasnistvo", hipoteka_1: "$hipoteka_1", hipoteka_2: "$hipoteka_2" },
+        _id: {
+          vlasnistvo: "$vlasnistvo",
+          hipoteka_1: "$hipoteka_1",
+          hipoteka_2: "$hipoteka_2",
+        },
         sum: { $sum: "$povrsina" },
       },
     },
   ]);
-  const hipoteke = {}
-  hipotekePocetno.map((red)=>{
-    if(red._id.hipoteka_1 != '' || red._id.hipoteka_2 != '' )
-    {
-      if(hipoteke[red._id.vlasnistvo]) 
-      hipoteke[red._id.vlasnistvo] += red.sum
-      else{
-        hipoteke[red._id.vlasnistvo] = red.sum
+  const hipoteke = {};
+  hipotekePocetno.map((red) => {
+    if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "") {
+      if (hipoteke[red._id.vlasnistvo]) hipoteke[red._id.vlasnistvo] += red.sum;
+      else {
+        hipoteke[red._id.vlasnistvo] = red.sum;
       }
     }
-  })
-  //console.log(hipotekePocetno)
-  //console.log(hipoteke)
+  });
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
   return {
     props: {
@@ -136,7 +137,7 @@ export async function getStaticProps(context) {
       firmeArray: firmeArray,
       data: firme,
       opstinePocetno: opstinePocetno,
-      hipoteke: hipoteke
+      hipoteke: hipoteke,
     },
   };
 }

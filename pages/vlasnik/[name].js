@@ -18,12 +18,22 @@ import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
 import coords from "../../utils/vojvodina_coordinates.json";
 
-export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog_reda }) {
+export default function Firma({
+  vlasnik,
+  sum,
+  opstine,
+  hipoteke,
+  hipoteke_drugog_reda,
+  suma_hipoteka,
+}) {
   //const parcels = JSON.parse(parcelsJSON)
   console.log(vlasnik);
   //console.log( parcelsJSON);
   console.log(sum);
   console.log(opstine);
+  let suma_donja_tabela_hip_1 = 0;
+  let suma_donja_tabela_hip_2 = 0;
+  let suma_donja_tabela_hip = 0;
   return (
     <div className="flex flex-col flex-1">
       <Map opstine={opstine} />
@@ -72,10 +82,10 @@ export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog
                     {formatNumber(opstine[opstina].sum)}
                   </Td>
                   <Td p={[2, 5]} isNumeric>
-                    {formatNumber(opstine[opstina].sum)}
+                    {formatNumber(suma_hipoteka)}
                   </Td>
                   <Td p={[2, 5]} isNumeric>
-                    {formatNumber(opstine[opstina].sum)}
+                    {formatNumber(opstine[opstina].sum - suma_hipoteka)}
                   </Td>
                 </Tr>
               </Link>
@@ -118,21 +128,24 @@ export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
-              Hipoteka
+              Data:
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              U korist:
+              Hipoteka I:
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Povrsina
+              Hipoteka II:
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Slobodno
+              Ukupno:
             </Th>
           </Tr>
         </Thead>
         <Tbody>
           {Object.keys(hipoteke).map((hipoteka, index) => {
+            suma_donja_tabela_hip_1 += hipoteke[hipoteka];
+            suma_donja_tabela_hip_2 += (hipoteke_drugog_reda[hipoteka] ? hipoteke_drugog_reda[hipoteka] : 0);
+            suma_donja_tabela_hip += hipoteke[hipoteka] + (hipoteke_drugog_reda[hipoteka] ? hipoteke_drugog_reda[hipoteka] : 0);
             return (
               <Link key={index} href="/">
                 <Tr style={{}} className="cursor-pointer" key={index}>
@@ -141,10 +154,17 @@ export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog
                     {formatNumber(hipoteke[hipoteka])}
                   </Td>
                   <Td p={[2, 5]} isNumeric>
-                    {formatNumber(hipoteke[hipoteka])}
+                    {hipoteke_drugog_reda[hipoteka]
+                      ? formatNumber(hipoteke_drugog_reda[hipoteka])
+                      : ""}
                   </Td>
-                  <Td p={[2, 5]} isNumeric>
-                    {formatNumber(hipoteke[hipoteka])}
+                  <Td isNumeric>
+                    {formatNumber(
+                      hipoteke[hipoteka] +
+                        (hipoteke_drugog_reda[hipoteka]
+                          ? hipoteke_drugog_reda[hipoteka]
+                          : 0)
+                    )}
                   </Td>
                 </Tr>
               </Link>
@@ -165,12 +185,12 @@ export default function Firma({ vlasnik, sum, opstine, hipoteke, hipoteke_drugog
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(suma_donja_tabela_hip_1)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(suma_donja_tabela_hip)}
               </p>
             </Th>
           </Tr>
@@ -219,6 +239,7 @@ export async function getServerSideProps(context) {
   console.log("opstineSrednjeno:", opstineSrednjeno);
   let hipoteke = {};
   let hipoteke_drugog_reda = {};
+  let suma_hipoteka = 0;
   parcels.map((parcel) => {
     if (parcel.hipoteka_1) {
       if (hipoteke[parcel.hipoteka_1]) {
@@ -226,22 +247,25 @@ export async function getServerSideProps(context) {
       } else {
         hipoteke[parcel.hipoteka_1] = parcel.povrsina;
       }
+      suma_hipoteka += parcel.povrsina
     }
     if (parcel.hipoteka_2) {
-      if (hipoteke[parcel.hipoteka_2]) {
-        hipoteke[parcel.hipoteka_2] += parcel.povrsina;
-      } else {
-        hipoteke[parcel.hipoteka_2] = parcel.povrsina;
-      }
+      //if (hipoteke[parcel.hipoteka_2]) {
+      //  hipoteke[parcel.hipoteka_2] += parcel.povrsina;
+      //} else {
+      //  hipoteke[parcel.hipoteka_2] = parcel.povrsina;
+      //}
       if (hipoteke_drugog_reda[parcel.hipoteka_2]) {
         hipoteke_drugog_reda[parcel.hipoteka_2] += parcel.povrsina;
       } else {
         hipoteke_drugog_reda[parcel.hipoteka_2] = parcel.povrsina;
       }
+      //suma_hipoteka += parcel.povrsina;
     }
   });
   console.log("Hipoteke:", hipoteke);
   console.log("Hipoteke 2 reda:", hipoteke_drugog_reda);
+  console.log("suma_hipoteka:", suma_hipoteka);
   return {
     props: {
       vlasnik: name,
@@ -249,7 +273,8 @@ export async function getServerSideProps(context) {
       sum: sum,
       opstine: opstineSrednjeno,
       hipoteke: hipoteke,
-      hipoteke_drugog_reda: hipoteke_drugog_reda
+      hipoteke_drugog_reda: hipoteke_drugog_reda,
+      suma_hipoteka: suma_hipoteka
     },
   };
 }
