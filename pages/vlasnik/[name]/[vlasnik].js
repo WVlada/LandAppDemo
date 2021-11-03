@@ -18,7 +18,7 @@ import { formatNumber, makeOpstineFromFirme } from "../../../utils/utils";
 import Map from "../../../components/index/map_component";
 import coords from "../../../utils/vojvodina_coordinates.json";
 
-export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
+export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina }) {
   const parcels = JSON.parse(parcelsJSON);
   return (
     <div className="flex flex-col flex-1">
@@ -29,7 +29,7 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
         colorScheme="gray"
         mt={[2, 10]}
       >
-        <TableCaption placement="top" >Pregled svog zemljišta vlasnika: {vlasnik}</TableCaption>
+        <TableCaption fontSize={'large'}  placement="top" >Pregled svog zemljišta vlasnika {vlasnik} u opštini {opstina}</TableCaption>
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
@@ -130,9 +130,11 @@ export async function getServerSideProps(context) {
   //  },
   //]);
   //const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
+  
   return {
     props: {
-      //vlasnik: name,
+      vlasnik: vlasnik,
+      opstina: name,
       parcelsJSON: JSON.stringify(parcels),
       //sum: sum,
       //opstine: opstineSrednjeno,

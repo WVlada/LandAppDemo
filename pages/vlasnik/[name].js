@@ -25,6 +25,7 @@ export default function Firma({
   hipoteke,
   hipoteke_drugog_reda,
   suma_hipoteka,
+  hipoteke_sve_keys,
 }) {
   //const parcels = JSON.parse(parcelsJSON)
   console.log(vlasnik);
@@ -106,12 +107,12 @@ export default function Firma({
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(suma_hipoteka)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(sum - suma_hipoteka)}
               </p>
             </Th>
           </Tr>
@@ -128,7 +129,7 @@ export default function Firma({
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
-              Data:
+              Banka/poverilac:
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               Hipoteka I:
@@ -142,16 +143,22 @@ export default function Firma({
           </Tr>
         </Thead>
         <Tbody>
-          {Object.keys(hipoteke).map((hipoteka, index) => {
-            suma_donja_tabela_hip_1 += hipoteke[hipoteka];
-            suma_donja_tabela_hip_2 += (hipoteke_drugog_reda[hipoteka] ? hipoteke_drugog_reda[hipoteka] : 0);
-            suma_donja_tabela_hip += hipoteke[hipoteka] + (hipoteke_drugog_reda[hipoteka] ? hipoteke_drugog_reda[hipoteka] : 0);
+          {hipoteke_sve_keys.map((hipoteka, index) => {
+            suma_donja_tabela_hip_1 += hipoteke[hipoteka] ? hipoteke[hipoteka] : 0;
+            suma_donja_tabela_hip_2 += hipoteke_drugog_reda[hipoteka]
+              ? hipoteke_drugog_reda[hipoteka]
+              : 0;
+            suma_donja_tabela_hip +=
+              (hipoteke[hipoteka] ? hipoteke[hipoteka] : 0) +
+              (hipoteke_drugog_reda[hipoteka]
+                ? hipoteke_drugog_reda[hipoteka]
+                : 0);
             return (
               <Link key={index} href="/">
                 <Tr style={{}} className="cursor-pointer" key={index}>
                   <Td p={[2, 5]}>{hipoteka}</Td>
                   <Td textAlign="right" p={[2, 5]}>
-                    {formatNumber(hipoteke[hipoteka])}
+                    {hipoteke[hipoteka] ? formatNumber(hipoteke[hipoteka]) : ''}
                   </Td>
                   <Td p={[2, 5]} isNumeric>
                     {hipoteke_drugog_reda[hipoteka]
@@ -160,7 +167,7 @@ export default function Firma({
                   </Td>
                   <Td isNumeric>
                     {formatNumber(
-                      hipoteke[hipoteka] +
+                      (hipoteke[hipoteka] ? hipoteke[hipoteka] : 0) +
                         (hipoteke_drugog_reda[hipoteka]
                           ? hipoteke_drugog_reda[hipoteka]
                           : 0)
@@ -180,12 +187,12 @@ export default function Firma({
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(suma_donja_tabela_hip_1)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(suma_donja_tabela_hip_1)}
+                {formatNumber(suma_donja_tabela_hip_2)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
@@ -263,6 +270,13 @@ export async function getServerSideProps(context) {
       //suma_hipoteka += parcel.povrsina;
     }
   });
+  let hipoteke_sve_keys = Object.keys(hipoteke)
+  Object.keys(hipoteke_drugog_reda).map(e=>{
+    if(!hipoteke_sve_keys.includes(e))
+    hipoteke_sve_keys.push(e)
+  })
+  
+  console.log("hipoteke_sve_keys:", hipoteke_sve_keys);
   console.log("Hipoteke:", hipoteke);
   console.log("Hipoteke 2 reda:", hipoteke_drugog_reda);
   console.log("suma_hipoteka:", suma_hipoteka);
@@ -274,7 +288,8 @@ export async function getServerSideProps(context) {
       opstine: opstineSrednjeno,
       hipoteke: hipoteke,
       hipoteke_drugog_reda: hipoteke_drugog_reda,
-      suma_hipoteka: suma_hipoteka
+      suma_hipoteka: suma_hipoteka,
+      hipoteke_sve_keys: hipoteke_sve_keys,
     },
   };
 }
