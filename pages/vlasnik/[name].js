@@ -28,10 +28,10 @@ export default function Firma({
   hipoteke_sve_keys,
 }) {
   //const parcels = JSON.parse(parcelsJSON)
-  console.log(vlasnik);
+  //console.log(vlasnik);
   //console.log( parcelsJSON);
-  console.log(sum);
-  console.log(opstine);
+  //console.log(sum);
+  //console.log(opstine);
   let suma_donja_tabela_hip_1 = 0;
   let suma_donja_tabela_hip_2 = 0;
   let suma_donja_tabela_hip = 0;
@@ -224,7 +224,7 @@ export async function getServerSideProps(context) {
   vlasnistvoSum.map((e) => {
     firme[e._id] = { active: false };
   });
-  console.log("parcel 0", parcels[0]);
+  //console.log("parcel 0", parcels[0]);
   const sum = parcels.reduce(function (a, b) {
     return a + b.povrsina;
   }, 0);
@@ -232,7 +232,7 @@ export async function getServerSideProps(context) {
     active: true,
     sum: sum,
   };
-  console.log("firme:", firme);
+  //console.log("firme:", firme);
   let opstinePocetno = await Parcel.aggregate([
     {
       $group: {
@@ -243,7 +243,7 @@ export async function getServerSideProps(context) {
   ]);
   //console.log("opstinePocetno:", opstinePocetno);
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
-  console.log("opstineSrednjeno:", opstineSrednjeno);
+  //console.log("opstineSrednjeno:", opstineSrednjeno);
   let hipoteke = {};
   let hipoteke_drugog_reda = {};
   let suma_hipoteka = 0;
@@ -276,10 +276,10 @@ export async function getServerSideProps(context) {
     hipoteke_sve_keys.push(e)
   })
   
-  console.log("hipoteke_sve_keys:", hipoteke_sve_keys);
-  console.log("Hipoteke:", hipoteke);
-  console.log("Hipoteke 2 reda:", hipoteke_drugog_reda);
-  console.log("suma_hipoteka:", suma_hipoteka);
+  //console.log("hipoteke_sve_keys:", hipoteke_sve_keys);
+  //console.log("Hipoteke:", hipoteke);
+  //console.log("Hipoteke 2 reda:", hipoteke_drugog_reda);
+  //console.log("suma_hipoteka:", suma_hipoteka);
   return {
     props: {
       vlasnik: name,

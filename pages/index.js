@@ -11,10 +11,11 @@ export default function Index({
   data,
   firmeArray,
   opstinePocetno,
-  hipoteke,
+  hipotekePocetno,
 }) {
   const [firme, setFirme] = useState(data);
   const [opstine, setOpstine] = useState(opstineSrednjeno);
+  const [hipoteke, setHipoteke] = useState(hipotekePocetno);
   const handleCheckClick = (e) => {
     let newFirme = { ...firme };
     newFirme[e]["active"] = !newFirme[e].active;
@@ -25,6 +26,7 @@ export default function Index({
     setOpstine(newOpstine);
   }, [firme, opstinePocetno]);
   //console.log("Opstine:", opstine);
+  console.log("Hipoteke:", hipoteke);
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
@@ -137,7 +139,7 @@ export async function getStaticProps(context) {
       firmeArray: firmeArray,
       data: firme,
       opstinePocetno: opstinePocetno,
-      hipoteke: hipoteke,
+      hipotekePocetno: hipoteke,
     },
   };
 }
