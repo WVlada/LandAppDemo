@@ -56,7 +56,7 @@ export default function Index({
       </div>
       <div className="flex flex-1 justify-center">
         <Link href="/klase" className="" w={50} passHref>
-          <Button>Tabela klasa</Button>
+          <Button mt={10} mb={10}>Tabela klasa</Button>
         </Link>
       </div>
     </div>
