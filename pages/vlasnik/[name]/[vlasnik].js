@@ -25,7 +25,7 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina }) {
       {/*<Map opstine={opstine} />*/}
       <Table
         className="text-xs md:text-lg"
-        variant="simple"
+        variant="striped"
         colorScheme="gray"
         mt={[2, 10]}
       >

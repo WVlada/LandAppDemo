@@ -34,6 +34,7 @@ export default function Index({
     setHipoteke(newHipoteke);
   }, [firme, opstinePocetno, hipotekePocetno]);
   //console.log("Opstine:", opstine);
+  console.log("Hipoteke:", hipoteke);
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
