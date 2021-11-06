@@ -1,0 +1,72 @@
+import TabelaKlasa from "../components/index/tabela_klasa.component";
+import { useState, useEffect } from "react";
+import Parcel from "../models/parcel";
+import dbConnect from "../utils/mongoose";
+
+export default function Klase({ objekat, klase }) {
+    
+  return (
+    <div className="flex flex-col flex-1">
+      <TabelaKlasa objekat={objekat} klase={klase} />
+    </div>
+  );
+}
+
+export async function getStaticProps(context) {
+  await dbConnect();
+  let pocetno = await Parcel.aggregate([
+    {
+      $group: {
+        _id: {
+          vlasnistvo: "$vlasnistvo",
+          klasa: "$klasa",
+        },
+        sum: { $sum: "$povrsina" },
+      },
+    },
+  ]);
+  const f = {};
+  const klase = ['ostalo'];
+  let klaseBitne = [
+    "Njiva I",
+    "Njiva II",
+    "Njiva III",
+    "Njiva IV",
+    "Njiva V",
+    "Njiva VI",
+  ];
+  pocetno.map((red) => {
+    if (f[red._id.vlasnistvo]) {
+      if (f[red._id.vlasnistvo][red._id.klasa]) {
+        f[red._id.vlasnistvo][red._id.klasa] += red.sum;
+      } else {
+        if (klaseBitne.includes(red._id.klasa)) {
+          f[red._id.vlasnistvo][red._id.klasa] = red.sum;
+        } else {
+          f[red._id.vlasnistvo]["ostalo"] += red.sum;
+        }
+      }
+    } else {
+      f[red._id.vlasnistvo] = {};
+      if (klaseBitne.includes(red._id.klasa)) {
+        f[red._id.vlasnistvo][red._id.klasa] = red.sum;
+      } else {
+        f[red._id.vlasnistvo]["ostalo"] = red.sum;
+      }
+    }
+    if (!klase.includes(red._id.klasa)) {
+      if (klaseBitne.includes(red._id.klasa)) {
+        klase.push(red._id.klasa);
+      }
+    }
+  });
+  console.log(f);
+  console.log("klase", klase);
+
+  return {
+    props: {
+      objekat: f,
+      klase: klase.sort(),
+    },
+  };
+}

@@ -1,20 +1,27 @@
 import Map from "../components/index/map_component";
 import LeftButtons from "../components/index/buttons_component";
 import TableComponent from "../components/index/table.component";
+import TabelaKlasa from "../components/index/tabela_klasa.component";
 import FileUploadForm from "../components/index/upload_file";
 import { useState, useEffect } from "react";
 import Parcel from "../models/parcel";
 import dbConnect from "../utils/mongoose";
+import { Button } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function Index({
   opstineSrednjeno,
   data,
   firmeArray,
   opstinePocetno,
-  hipoteke,
+  hipotekePocetno,
 }) {
   const [firme, setFirme] = useState(data);
   const [opstine, setOpstine] = useState(opstineSrednjeno);
+  const [hipoteke, setHipoteke] = useState(
+    makeHipotekeFromFirme(firme, hipotekePocetno)
+  );
+
   const handleCheckClick = (e) => {
     let newFirme = { ...firme };
     newFirme[e]["active"] = !newFirme[e].active;
@@ -22,8 +29,10 @@ export default function Index({
   };
   useEffect(() => {
     let newOpstine = makeOpstineFromFirme(firme, opstinePocetno);
+    let newHipoteke = makeHipotekeFromFirme(firme, hipotekePocetno);
     setOpstine(newOpstine);
-  }, [firme, opstinePocetno]);
+    setHipoteke(newHipoteke);
+  }, [firme, opstinePocetno, hipotekePocetno]);
   //console.log("Opstine:", opstine);
   return (
     <div className="flex flex-col flex-1">
@@ -44,10 +53,30 @@ export default function Index({
           firmeArray={firmeArray}
         />
       </div>
+      <div className="flex flex-1 justify-center">
+        <Link href="/klase" className="" w={50} passHref>
+          <Button>Tabela klasa</Button>
+        </Link>
+      </div>
     </div>
   );
 }
 
+const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
+  const hipoteke = {};
+  hipotekePocetno.map((red) => {
+    if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "") {
+      if (hipoteke[red._id.vlasnistvo]) {
+        hipoteke[red._id.vlasnistvo] += red.sum;
+      } else {
+        if (firme[red._id.vlasnistvo]["active"]) {
+          hipoteke[red._id.vlasnistvo] = red.sum;
+        }
+      }
+    }
+  });
+  return hipoteke;
+};
 const makeOpstineFromFirme = (firme, opstine) => {
   //console.log(opstine)
   // opstine: [
@@ -120,16 +149,18 @@ export async function getStaticProps(context) {
       },
     },
   ]);
-  const hipoteke = {};
-  hipotekePocetno.map((red) => {
-    if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "") {
-      if (hipoteke[red._id.vlasnistvo]) hipoteke[red._id.vlasnistvo] += red.sum;
-      else {
-        hipoteke[red._id.vlasnistvo] = red.sum;
-      }
-    }
-  });
+  //const hipoteke = {};
+  //hipotekePocetno.map((red) => {
+  //  if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "") {
+  //    if (hipoteke[red._id.vlasnistvo]) hipoteke[red._id.vlasnistvo] += red.sum;
+  //    else {
+  //      hipoteke[red._id.vlasnistvo] = red.sum;
+  //    }
+  //  }
+  //});
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
+  //const hipotekeSrednjeno = makeHipotekeFromFirme(firme, hipotekePocetno);
+
   return {
     props: {
       vlasnistvoSum: vlasnistvoSum,
@@ -137,7 +168,7 @@ export async function getStaticProps(context) {
       firmeArray: firmeArray,
       data: firme,
       opstinePocetno: opstinePocetno,
-      hipoteke: hipoteke,
+      hipotekePocetno: hipotekePocetno,
     },
   };
 }
