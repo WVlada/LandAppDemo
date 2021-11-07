@@ -26,7 +26,7 @@ export const formatNumber = (number) => {
 };
 
 export const makeOpstineFromFirme = (firme, opstine) => {
-  console.log(opstine)
+  //console.log(opstine)
   // opstine: [
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Đ.N.' }, sum: 116094 },
   //  { _id: { opstina: 'Sečanj', vlasnistvo: 'Ribnjak Sutjeska' },

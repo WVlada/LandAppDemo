@@ -17,7 +17,7 @@ import Link from "next/link";
 import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
 
-export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
+export default function Firma({ opstina, parcelsJSON, sum, opstine }) {
   const parcels = JSON.parse(parcelsJSON);
 
   return (
@@ -29,7 +29,9 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine }) {
         colorScheme="gray"
         mt={[2, 10]}
       >
-        <TableCaption>Pregled svog zemljišta</TableCaption>
+        <TableCaption placement="top">
+          Pregled zemljišta u opštini {opstina}
+        </TableCaption>
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
@@ -97,7 +99,11 @@ export async function getServerSideProps(context) {
   await dbConnect();
 
   const { name } = context.params;
-  const parcels = await Parcel.find({ opstina: name });
+  const parcels = await Parcel.aggregate([
+    { $match : { opstina : name } },
+    { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
+    { $sort: { _id: -1 } },
+  ]);;
   let vlasnistvoSum = await Parcel.aggregate([
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
     { $sort: { _id: -1 } },
@@ -106,7 +112,7 @@ export async function getServerSideProps(context) {
   vlasnistvoSum.map((e) => {
     firme[e._id] = { active: false };
   });
-  console.log("parcel 0", parcels[0]);
+  console.log("parcels", parcels);
   const sum = parcels.reduce(function (a, b) {
     return a + b.povrsina;
   }, 0);
@@ -126,7 +132,7 @@ export async function getServerSideProps(context) {
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
   return {
     props: {
-      vlasnik: name,
+      opstina: name,
       parcelsJSON: JSON.stringify(parcels),
       sum: sum,
       opstine: opstineSrednjeno,
