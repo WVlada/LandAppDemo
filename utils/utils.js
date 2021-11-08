@@ -37,7 +37,7 @@ export const makeOpstineFromFirme = (firme, opstine) => {
   let firmeArray = Object.keys(firme);
   let opstineSrednjeno = {};
   opstine.map((o, index) => {
-    if (firme[o._id["vlasnistvo"]]["active"]) {
+    if (firme[o._id["vlasnistvo"]] && firme[o._id["vlasnistvo"]]["active"]) {
       if (opstineSrednjeno[o._id["opstina"]]) {
         if (opstineSrednjeno[o._id["opstina"]]["vlasnici"][o._id]) {
           opstineSrednjeno[o._id["opstina"]].sum += o.sum;
@@ -57,5 +57,6 @@ export const makeOpstineFromFirme = (firme, opstine) => {
     } else {
     }
   });
+  console.log("opstine sredjeno:", opstineSrednjeno)
   return opstineSrednjeno;
 };

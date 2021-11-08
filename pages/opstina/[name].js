@@ -17,12 +17,12 @@ import Link from "next/link";
 import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
 
-export default function Firma({ opstina, parcelsJSON, sum, opstine }) {
+export default function Firma({ opstina, parcelsJSON, hipoteke, opstine }) {
   const parcels = JSON.parse(parcelsJSON);
 
   return (
     <div className="flex flex-col flex-1">
-      <Map opstine={opstine} />
+      {<Map opstine={opstine} />}
       <Table
         className="text-xs md:text-lg"
         variant="striped"
@@ -70,22 +70,22 @@ export default function Firma({ opstina, parcelsJSON, sum, opstine }) {
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(0)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(0)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(0)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
               <p className="lowercase font-extrabold text-xs md:text-lg">
-                {formatNumber(sum)}
+                {formatNumber(0)}
               </p>
             </Th>
           </Tr>
@@ -100,28 +100,56 @@ export async function getServerSideProps(context) {
 
   const { name } = context.params;
   const parcels = await Parcel.aggregate([
-    { $match : { opstina : name } },
-    { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
-    { $sort: { _id: -1 } },
-  ]);;
-  let vlasnistvoSum = await Parcel.aggregate([
+    { $match: { opstina: name } },
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
     { $sort: { _id: -1 } },
   ]);
+  //let vlasnistvoSum = await Parcel.aggregate([
+  //  { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
+  //  { $sort: { _id: -1 } },
+  //]);
   const firme = {};
-  vlasnistvoSum.map((e) => {
-    firme[e._id] = { active: false };
+  //vlasnistvoSum.map((e) => {
+  //  firme[e._id] = { active: false };
+  //});
+  parcels.map((e) => {
+    firme[e._id] = { active: true };
   });
-  console.log("parcels", parcels);
-  const sum = parcels.reduce(function (a, b) {
-    return a + b.povrsina;
-  }, 0);
-  firme[`${name}`] = {
-    active: true,
-    sum: sum,
-  };
+  //console.log("parcels", parcels);
+  //const sum = parcels.reduce(function (a, b) {
+  //  return a + b.povrsina;
+  //}, 0);
+  //firme[`${name}`] = {
+  //  active: true,
+  ////  sum: sum,
+  //};
   console.log("firme:", firme);
+  const hip = await Parcel.aggregate([
+    { $match: { opstina: name } },
+    { $sort: { _id: -1 } },
+  ]).group({
+    _id: {
+      hipoteka_1: "$hipoteka_1",
+      hipoteka_2: "$hipoteka_2",
+      vlasnistvo: "$vlasnistvo",
+    },
+    sum: { $sum: "$povrsina" },
+  });
+  //console.log("hip:", hip);
+  let hipoteke = {};
+  hip.map((red) => {
+    if (red._id.hipoteka_1 || red._id.hipoteka_2) {
+      if (hipoteke[red._id.vlasnistvo]) {
+        hipoteke[red._id.vlasnistvo] += red.sum;
+      } else {
+        hipoteke[red._id.vlasnistvo] = red.sum;
+      }
+    } else {
+    }
+  });
+  console.log("hipteke", hipoteke);
   let opstinePocetno = await Parcel.aggregate([
+    { $match: { opstina: name } },
     {
       $group: {
         _id: { opstina: "$opstina", vlasnistvo: "$vlasnistvo" },
@@ -134,7 +162,7 @@ export async function getServerSideProps(context) {
     props: {
       opstina: name,
       parcelsJSON: JSON.stringify(parcels),
-      sum: sum,
+      hipoteke: hipoteke,
       opstine: opstineSrednjeno,
     },
   };
