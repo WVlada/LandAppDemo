@@ -104,6 +104,23 @@ export async function getServerSideProps(context) {
     { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
     { $sort: { _id: -1 } },
   ]);
+  const parcelsKO = await Parcel.aggregate([
+    { $match: { opstina: name } },
+    { $sort: { broj_parcele: -1 } },
+  ]);
+  const ko = {};
+  parcelsKO.map((red) => {
+    if (ko[red.vlasnistvo]) {
+      if (ko[red.vlasnistvo][red.ko]) {
+        ko[red.vlasnistvo][red.ko].push(red);
+      } else {
+        ko[red.vlasnistvo][red.ko] = [red];
+      }
+    } else {
+      ko[red.vlasnistvo] = {}
+    }
+  });
+  console.log("ko", ko);
   //let vlasnistvoSum = await Parcel.aggregate([
   //  { $group: { _id: "$vlasnistvo", sum: { $sum: "$povrsina" } } },
   //  { $sort: { _id: -1 } },
