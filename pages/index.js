@@ -8,6 +8,8 @@ import Parcel from "../models/parcel";
 import dbConnect from "../utils/mongoose";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
+import { useSession, getSession } from "next-auth/client";
+import LoginScreen from "../components/index/login";
 
 export default function Index({
   opstineSrednjeno,
@@ -34,8 +36,19 @@ export default function Index({
     setHipoteke(newHipoteke);
   }, [firme, opstinePocetno, hipotekePocetno]);
   //console.log("Opstine:", opstine);
-  console.log("Hipoteke:", hipoteke);
+  //console.log("Hipoteke:", hipoteke);
+  const [session, loading] = useSession();
+  console.log("sess:", session);
+  if (!session) {
+    return (
+     <LoginScreen>
+
+     </LoginScreen>
+    );
+  }
+  
   return (
+
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
         <LeftButtons
