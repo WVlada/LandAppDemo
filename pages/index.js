@@ -8,7 +8,7 @@ import Parcel from "../models/parcel";
 import dbConnect from "../utils/mongoose";
 import { Button } from "@chakra-ui/react";
 import Link from "next/link";
-import { useSession, getSession } from "next-auth/client";
+import { useSession, getSession, signIn, signOut } from "next-auth/client";
 import LoginScreen from "../components/index/login";
 
 export default function Index({
@@ -39,6 +39,9 @@ export default function Index({
   //console.log("Hipoteke:", hipoteke);
   const [session, loading] = useSession();
   console.log("sess:", session);
+  const handleLogout = ()=>{
+    signOut()
+  }
   if (!session) {
     return (
      <LoginScreen>
@@ -48,7 +51,6 @@ export default function Index({
   }
   
   return (
-
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
         <LeftButtons
@@ -69,7 +71,24 @@ export default function Index({
       </div>
       <div className="flex flex-1 justify-center">
         <Link href="/klase" className="" w={50} passHref>
-          <Button mt={10} mb={10}>Tabela klasa</Button>
+          <Button mt={10} mb={10}>
+            Tabela klasa
+          </Button>
+        </Link>
+      </div>
+      <div className="flex flex-1 justify-end">
+        <Link
+          href="/signout"
+          pt={1}
+          pb={1}
+          ml={2}
+          passHref
+          _hover={{ bg: "#006871", cursor: 'pointer' }}
+          onClick={handleLogout}
+        ><a className="rounded-sm  text-green-basic font-oswald">
+          logout
+        </a>
+          
         </Link>
       </div>
     </div>

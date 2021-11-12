@@ -64,7 +64,7 @@ const Map = ({ opstine }) => {
   return (
     <div
       id="map-layout"
-      className="w-full min-w-0 h-full flex flex-col flex-1 mt-6 "
+      className="w-full min-w-0 h-full flex flex-col flex-1 mt-6"
     >
       <motion.div
         variants={appear}

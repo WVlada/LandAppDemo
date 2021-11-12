@@ -4,10 +4,9 @@ const customColors = {
   ...defaultTheme.colors,
   green: {
     basic: "#006871",
-    dark: "#636363",
-    100: "#F4F4F5",
-    300: "#D4D4D8",
-    500: "#6B7280",
+    light: "#24b4bc",
+    dark: "#015e65",
+    100: "#24b4bc",
   },
 };
 module.exports = {
