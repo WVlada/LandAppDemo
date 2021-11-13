@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ImageMapper, ImageMapperProps } from "react-image-mapper2";
-import mapa from "../../public/vojvodina_map1.svg";
+import mapa from "../../public/vojvodina_map3.svg";
 import coords from "../../utils/vojvodina_coordinates.json";
 import {
   Popover,
@@ -91,7 +91,7 @@ const Map = ({ opstine }) => {
                 <PopoverContent
                   //w={[24, 40]}
                   textAlign="right"
-                  className="text-xs md:text-xl max-w-max"
+                  className="text-xs md:text-xl max-w-max font-oswald"
                   borderWidth={[1, 2]}
                   borderColor={opstina.strokeColor}
                   top={opstina.top * ratio}

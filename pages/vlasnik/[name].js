@@ -12,12 +12,14 @@ import {
   Th,
   Td,
   TableCaption,
+  IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
 import coords from "../../utils/vojvodina_coordinates.json";
-
+import { ArrowLeftIcon } from "@chakra-ui/icons";
+import HomeButton from "../../components/home_button";
 export default function Firma({
   vlasnik,
   sum,
@@ -37,29 +39,32 @@ export default function Firma({
   let suma_donja_tabela_hip = 0;
   return (
     <div className="flex flex-col flex-1">
+      <HomeButton />
       <Map opstine={opstine} />
       <Table
-        className="text-xs md:text-lg"
+        className="text-xs md:text-lg font-oswald"
         variant="simple"
         colorScheme="gray"
         mt={[2, 10]}
       >
         <TableCaption placement="top">
-          Pregled svog zemljišta vlasnika: {vlasnik}
+          <p className="font-oswald text-base md:text-lg">
+            Pregled svog zemljišta vlasnika: {vlasnik}
+          </p>
         </TableCaption>
         <Thead>
           <Tr>
-            <Th textAlign="center" p={[1, 5]}>
-              Opština
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Opština</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Površina
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Površina</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Hipoteka
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Hipoteka</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Slobodno
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Slobodno</p>
             </Th>
           </Tr>
         </Thead>
@@ -78,14 +83,14 @@ export default function Firma({
                   className="cursor-pointer"
                   key={index}
                 >
-                  <Td p={[2, 5]}>{opstina}</Td>
-                  <Td textAlign="right" p={[2, 5]}>
+                  <Td p={[2, 3]}>{opstina}</Td>
+                  <Td textAlign="right" p={[2, 3]}>
                     {formatNumber(opstine[opstina].sum)}
                   </Td>
-                  <Td p={[2, 5]} isNumeric>
+                  <Td p={[2, 3]} isNumeric>
                     {formatNumber(suma_hipoteka)}
                   </Td>
-                  <Td p={[2, 5]} isNumeric>
+                  <Td p={[2, 3]} isNumeric>
                     {formatNumber(opstine[opstina].sum - suma_hipoteka)}
                   </Td>
                 </Tr>
@@ -95,23 +100,23 @@ export default function Firma({
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {/*formatNumber(sum)*/}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(sum)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(suma_hipoteka)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(sum - suma_hipoteka)}
               </p>
             </Th>
@@ -120,31 +125,35 @@ export default function Firma({
       </Table>
       <div></div>
       <Table
-        className="text-xs md:text-lg"
+        className="text-xs md:text-lg font-oswald"
         variant="simple"
         colorScheme="gray"
         mt={[2, 10]}
       >
-        <TableCaption placement="top">Pregled hipoteka</TableCaption>
+        <TableCaption placement="top">
+          <p className="font-oswald text-base md:text-lg">Pregled hipoteka</p>
+        </TableCaption>
         <Thead>
           <Tr>
-            <Th textAlign="center" p={[1, 5]}>
-              Banka/poverilac:
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Banka/poverilac:</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Hipoteka I:
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Hipoteka I:</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Hipoteka II:
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Hipoteka II:</p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              Ukupno:
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="font-oswald text-xs md:text-lg">Ukupno:</p>
             </Th>
           </Tr>
         </Thead>
         <Tbody>
           {hipoteke_sve_keys.map((hipoteka, index) => {
-            suma_donja_tabela_hip_1 += hipoteke[hipoteka] ? hipoteke[hipoteka] : 0;
+            suma_donja_tabela_hip_1 += hipoteke[hipoteka]
+              ? hipoteke[hipoteka]
+              : 0;
             suma_donja_tabela_hip_2 += hipoteke_drugog_reda[hipoteka]
               ? hipoteke_drugog_reda[hipoteka]
               : 0;
@@ -154,24 +163,32 @@ export default function Firma({
                 ? hipoteke_drugog_reda[hipoteka]
                 : 0);
             return (
-              <Link key={index} href="/">
+              <Link passHref key={index} href="/">
                 <Tr style={{}} className="cursor-pointer" key={index}>
-                  <Td p={[2, 5]}>{hipoteka}</Td>
-                  <Td textAlign="right" p={[2, 5]}>
-                    {hipoteke[hipoteka] ? formatNumber(hipoteke[hipoteka]) : ''}
+                  <Td p={[2, 3]}>{hipoteka}</Td>
+                  <Td textAlign="right" p={[2, 3]}>
+                    <p className="font-oswald">
+                      {hipoteke[hipoteka]
+                        ? formatNumber(hipoteke[hipoteka])
+                        : ""}
+                    </p>
                   </Td>
-                  <Td p={[2, 5]} isNumeric>
-                    {hipoteke_drugog_reda[hipoteka]
-                      ? formatNumber(hipoteke_drugog_reda[hipoteka])
-                      : ""}
+                  <Td p={[2, 3]} isNumeric>
+                    <p className="font-oswald">
+                      {hipoteke_drugog_reda[hipoteka]
+                        ? formatNumber(hipoteke_drugog_reda[hipoteka])
+                        : ""}
+                    </p>
                   </Td>
                   <Td isNumeric>
-                    {formatNumber(
-                      (hipoteke[hipoteka] ? hipoteke[hipoteka] : 0) +
-                        (hipoteke_drugog_reda[hipoteka]
-                          ? hipoteke_drugog_reda[hipoteka]
-                          : 0)
-                    )}
+                    <p className="font-oswald">
+                      {formatNumber(
+                        (hipoteke[hipoteka] ? hipoteke[hipoteka] : 0) +
+                          (hipoteke_drugog_reda[hipoteka]
+                            ? hipoteke_drugog_reda[hipoteka]
+                            : 0)
+                      )}
+                    </p>
                   </Td>
                 </Tr>
               </Link>
@@ -180,23 +197,23 @@ export default function Firma({
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {/*formatNumber(sum)*/}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(suma_donja_tabela_hip_1)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(suma_donja_tabela_hip_2)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 5]}>
-              <p className="lowercase font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 3]}>
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(suma_donja_tabela_hip)}
               </p>
             </Th>

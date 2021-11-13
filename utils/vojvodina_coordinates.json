@@ -2,8 +2,8 @@
   "opstine": [
     {
       "name": "Zrenjanin",
-      "preFillColor": "rgba(254, 140, 129, 0.3)",
-      "strokeColor": "rgba(254, 140, 129, 0.7)",
+      "preFillColor": "rgba(255, 170, 170, 0.6)",
+      "strokeColor": "rgba(255, 170, 170, 0.9)",
       "shape": "poly",
       "lineWidth": "4",
       "top": 320,
@@ -24,8 +24,8 @@
     },
     {
       "name": "Pančevo",
-      "preFillColor": "rgba(124, 168, 255, 0.3)",
-      "strokeColor": "rgba(124, 168, 255, 0.7)",
+      "preFillColor": "rgba(124, 168, 255, 0.6)",
+      "strokeColor": "rgba(124, 168, 255, 0.9)",
       "lineWidth": "4",
       "top": 624,
       "left": 558,
@@ -42,8 +42,8 @@
     },
     {
       "name": "Vršac",
-      "preFillColor": "rgba(50, 168, 82, 0.3)",
-      "strokeColor": "rgba(50, 168, 82, 0.7)",
+      "preFillColor": "rgba(50, 168, 82, 0.6)",
+      "strokeColor": "rgba(50, 168, 82, 0.9)",
       "lineWidth": "4",
       "top": 500,
       "left": 600,
@@ -61,8 +61,8 @@
     },
     {
       "name": "Plandište",
-      "preFillColor": "rgba(255, 208, 143, 0.3)",
-      "strokeColor": "rgba(255, 208, 143, 0.7)",
+      "preFillColor": "rgba(255, 208, 143, 0.6)",
+      "strokeColor": "rgba(255, 208, 143, 0.9)",
       "lineWidth": "4",
       "top": 340,
       "left": 580,
@@ -75,8 +75,8 @@
     },
     {
       "name": "Palilula",
-      "preFillColor": "rgba(111, 109, 137, 0.3)",
-      "strokeColor": "rgba(111, 109, 137, 0.7)",
+      "preFillColor": "rgba(111, 109, 137, 0.6)",
+      "strokeColor": "rgba(111, 109, 137, 0.9)",
       "lineWidth": "4",
       "top": 510,
       "left": 360,
@@ -88,8 +88,8 @@
     },
     {
       "name": "Sečanj",
-      "preFillColor": "rgba(79, 252, 255, 0.3)",
-      "strokeColor": "rgba(79, 252, 255, 0.7)",
+      "preFillColor": "rgba(79, 252, 255, 0.6)",
+      "strokeColor": "rgba(79, 252, 255, 0.9)",
       "lineWidth": "4",
       "top": 270,
       "left": 500,
@@ -106,8 +106,8 @@
     },
     {
       "name": "Kikinda",
-      "preFillColor": "rgba(20, 100, 80, 0.3)",
-      "strokeColor": "rgba(30, 100, 80, 0.7)",
+      "preFillColor": "rgba(20, 100, 80, 0.6)",
+      "strokeColor": "rgba(30, 100, 80, 0.9)",
       "lineWidth": "4",
       "top": 80,
       "left": 460,
@@ -127,8 +127,8 @@
     },
     {
       "name": "Čoka",
-      "preFillColor": "rgba(255, 125, 184, 0.3)",
-      "strokeColor": "rgba(255, 125, 184, 0.7)",
+      "preFillColor": "rgba(255, 125, 184, 0.6)",
+      "strokeColor": "rgba(255, 125, 184, 0.9)",
       "lineWidth": "4",
       "top": 60,
       "left": 300,

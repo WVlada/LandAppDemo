@@ -13,6 +13,7 @@ import {
 import Link from "next/link";
 import { formatNumber } from "../../utils/utils";
 import { motion } from "framer-motion";
+import HomeButton from "../home_button";
 
 const TabelaKlasa = ({ objekat, klase }) => {
   const appear = {
@@ -30,8 +31,9 @@ const TabelaKlasa = ({ objekat, klase }) => {
       transition={{ type: "easeIn", duration: 0.5 }}
       className="flex flex-col"
     >
+      <HomeButton/>
       <Table
-        className="text-xs md:text-base w-max"
+        className="text-xs md:text-base w-max font-oswald"
         variant="striped"
         colorScheme="gray"
         mt={[2, 10]}
@@ -41,7 +43,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
         wrap="nowrap"
       >
         <TableCaption className="uppercase" placement="top">
-          Pregled zemljišta po klasama
+          <p className="font-oswald text-xl">Pregled zemljišta po klasama</p>
         </TableCaption>
         <Thead>
           <Tr wrap="nowrap">
@@ -51,11 +53,13 @@ const TabelaKlasa = ({ objekat, klase }) => {
               .map((f, index) => {
                 return (
                   <Th key={index} textAlign="center" p={[0, 1]}>
-                    {f}
+                    <p className="font-oswald">{f}</p>
                   </Th>
                 );
               })}
-            <Th>Ukupno:</Th>
+            <Th textAlign="center" >
+              <p className="font-oswald">Ukupno:</p>
+            </Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -63,19 +67,19 @@ const TabelaKlasa = ({ objekat, klase }) => {
             let s = 0;
             return (
               <Tr key={index}>
-                <Td textAlign="center" p={[0, 1]}>
+                <Td width={28} textAlign="left" p={[0, 1]}>
                   {f}
                 </Td>
                 {Object.keys(objekat)
                   .sort()
                   .map((e, index) => {
                     return (
-                      <Td key={index} textAlign="center" p={[0, 1]}>
+                      <Td width={40} key={index} textAlign="right" p={[0, 1]}>
                         {formatNumber(objekat[e][f] ? objekat[e][f] : 0)}
                       </Td>
                     );
                   })}
-                <Td textAlign="center" p={[0, 1]}>
+                <Td textAlign="right" p={[0, 1]}>
                   {Object.keys(objekat).map((a) => {
                     s += objekat[a][f] ? objekat[a][f] : 0;
                   })}
@@ -87,7 +91,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th>Ukupno:</Th>
+            <Th><p className="font-oswald">Ukupno:</p></Th>
             {Object.keys(objekat)
               .sort()
               .map((f, index) => {
@@ -97,7 +101,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
                 });
                 return (
                   <Th key={index} textAlign="center" p={[0, 1]}>
-                    <p className="lowercase font-extrabold text-xs md:text-lg">
+                    <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                       {formatNumber(sum)}
                     </p>
                   </Th>
@@ -106,11 +110,11 @@ const TabelaKlasa = ({ objekat, klase }) => {
             <Th>
               {Object.keys(objekat).map((e) => {
                 Object.keys(objekat[e]).map((f) => {
-                    totalSum += objekat[e][f] ? objekat[e][f] : 0
+                  totalSum += objekat[e][f] ? objekat[e][f] : 0;
                 });
               })}
-              <p className="lowercase font-extrabold text-xs md:text-lg">
-              { formatNumber(totalSum)}
+              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+                {formatNumber(totalSum)}
               </p>
             </Th>
           </Tr>

@@ -39,17 +39,13 @@ export default function Index({
   //console.log("Hipoteke:", hipoteke);
   const [session, loading] = useSession();
   console.log("sess:", session);
-  const handleLogout = ()=>{
-    signOut()
-  }
+  const handleLogout = () => {
+    signOut();
+  };
   if (!session) {
-    return (
-     <LoginScreen>
-
-     </LoginScreen>
-    );
+    return <LoginScreen></LoginScreen>;
   }
-  
+
   return (
     <div className="flex flex-col flex-1">
       <div className="flex flex-row flex-1">
@@ -62,7 +58,7 @@ export default function Index({
       </div>
 
       <div className="flex flex-col flex-1">
-        <FileUploadForm />
+        {session ? <FileUploadForm /> : null}
         <TableComponent
           hipoteke={hipoteke}
           firme={firme}
@@ -71,25 +67,23 @@ export default function Index({
       </div>
       <div className="flex flex-1 justify-center">
         <Link href="/klase" className="" w={50} passHref>
-          <Button mt={10} mb={10}>
+          <Button
+            mt={10}
+            mb={10}
+            bgColor={"#94b8bb"}
+            className="rounded-sm text-white bg-green-basic font-oswald"
+          >
             Tabela klasa
           </Button>
         </Link>
       </div>
       <div className="flex flex-1 justify-end">
-        <Link
-          href="/signout"
-          pt={1}
-          pb={1}
-          ml={2}
-          passHref
-          _hover={{ bg: "#006871", cursor: 'pointer' }}
+        <a
           onClick={handleLogout}
-        ><a className="rounded-sm  text-green-basic font-oswald">
+          className="rounded-sm m-3 text-green-basic font-oswald cursor-pointer"
+        >
           logout
         </a>
-          
-        </Link>
       </div>
     </div>
   );

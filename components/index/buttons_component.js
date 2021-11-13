@@ -32,6 +32,7 @@ const LeftButtons = ({ handleCheckClick, firme, firmeArray }) => {
             <MenuButton
               as={IconButton}
               w={0}
+              colorScheme="lime"
               icon={<HamburgerIcon />}
             ></MenuButton>
             <MenuList>
@@ -39,15 +40,17 @@ const LeftButtons = ({ handleCheckClick, firme, firmeArray }) => {
                 return (
                   <MenuItem key={s}>
                     <Checkbox
-                      className="truncate overflow-ellipsis mt-0 lg:mt-5"
+                      className="truncate overflow-ellipsis "
                       p={[1, 2]}
-                      h={4}
+                      h={[4, 6]}
                       fontSize={8}
                       value={s}
                       isChecked={firme[s]["active"]}
                       onChange={(e) => handleCheckClick(e.currentTarget.value)}
                     >
-                      <p className="text-xs md:text-lg p-0">{s}</p>
+                      <p className="text-xs md:text-lg p-0 font-oswald">
+                        {s}
+                      </p>
                     </Checkbox>
                   </MenuItem>
                 );

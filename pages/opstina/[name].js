@@ -16,6 +16,8 @@ import {
 import Link from "next/link";
 import { formatNumber, makeOpstineFromFirme } from "../../utils/utils";
 import Map from "../../components/index/map_component";
+import Homebutton from '../../components/home_button'
+import HomeButton from "../../components/home_button";
 
 export default function Firma({
   opstina,
@@ -29,96 +31,116 @@ export default function Firma({
 
   return (
     <div className="flex flex-col flex-1 mb-10">
+      <HomeButton />
       {<Map opstine={opstine} />}
       {Object.keys(ko).map((firma, index) => {
         return (
           <Table
-            className="text-xs md:text-lg"
+            className="text-xs md:text-lg font-oswald"
             variant="striped"
-            colorScheme="gray"
+            colorScheme="lime"
             mt={[2, 10]}
             key={index}
           >
             <TableCaption placement="top">
-              Pregled zemljišta: {firma}
+              <p className="font-oswald sm:text-lg">
+                Pregled zemljišta:{" "}
+                <Link
+                  key={index}
+                  passHref
+                  href={`/vlasnik/${firma}`}
+                  as={`/vlasnik/${firma}`}
+                >
+                  {firma}
+                </Link>
+              </p>
             </TableCaption>
             <Thead>
               <Tr>
-                <Th textAlign="center" p={[1, 5]}>
-                  Katastarska opština
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="font-oswald">Katastarska opština</p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  Površina
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="font-oswald">Površina</p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  Hipoteka
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="font-oswald">Hipoteka</p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  Slobodno
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="font-oswald">Slobodno</p>
                 </Th>
               </Tr>
             </Thead>
             <Tbody>
               {Object.keys(ko[firma]).map((kopstina, index) => {
                 return (
-                  <Tr className="cursor-pointer" key={index}>
-                    <Td p={[1, 5]}>{kopstina}</Td>
-                    <Td textAlign="right" p={[1, 5]}>
-                      {formatNumber(
-                        ko[firma][kopstina].reduce((a, b) => a + b.povrsina, 0)
-                      )}
-                    </Td>
-                    <Td p={[1, 5]} isNumeric>
-                      {formatNumber( hipoteke[firma] &&
-                        hipoteke[firma][kopstina]
-                          ? hipoteke[firma][kopstina]
-                          : 0
-                      )}
-                    </Td>
-                    <Td p={[1, 5]} isNumeric>
-                      {formatNumber(
-                        ko[firma][kopstina].reduce(
-                          (a, b) => a + b.povrsina,
-                          0
-                        ) -
-                          (hipoteke[firma] && hipoteke[firma][kopstina]
+                  <Link
+                    passHref
+                    key={index}
+                    href={`/vlasnik/${opstina}/${firma}?opstina=true`}
+                  >
+                    <Tr className="cursor-pointer" key={index}>
+                      <Td p={[1, 3]}>{kopstina}</Td>
+                      <Td textAlign="right" p={[1, 3]}>
+                        {formatNumber(
+                          ko[firma][kopstina].reduce(
+                            (a, b) => a + b.povrsina,
+                            0
+                          )
+                        )}
+                      </Td>
+                      <Td p={[1, 3]} isNumeric>
+                        {formatNumber(
+                          hipoteke[firma] && hipoteke[firma][kopstina]
                             ? hipoteke[firma][kopstina]
-                            : 0)
-                      )}
-                    </Td>
-                  </Tr>
+                            : 0
+                        )}
+                      </Td>
+                      <Td p={[1, 3]} isNumeric>
+                        {formatNumber(
+                          ko[firma][kopstina].reduce(
+                            (a, b) => a + b.povrsina,
+                            0
+                          ) -
+                            (hipoteke[firma] && hipoteke[firma][kopstina]
+                              ? hipoteke[firma][kopstina]
+                              : 0)
+                        )}
+                      </Td>
+                    </Tr>
+                  </Link>
                 );
               })}
             </Tbody>
             <Tfoot>
               <Tr>
-                <Th textAlign="center" p={[1, 5]}>
+                <Th textAlign="center" p={[1, 3]}>
                   <p className="lowercase font-extrabold text-xs md:text-lg">
                     {}
                   </p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  <p className="lowercase font-extrabold text-xs md:text-lg">
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                     {formatNumber(
                       parcels.filter((p) => p._id == firma)[0]["sum"]
                     )}
                   </p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  <p className="lowercase font-extrabold text-xs md:text-lg">
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                     {formatNumber(
-                      hipoteke[firma] ? 
-                      Object.keys(hipoteke[firma])
-                        .map((e) => {
-                          return hipoteke[firma][e];
-                        })
-                        .reduce((a, b) => a + b, 0) 
+                      hipoteke[firma]
+                        ? Object.keys(hipoteke[firma])
+                            .map((e) => {
+                              return hipoteke[firma][e];
+                            })
+                            .reduce((a, b) => a + b, 0)
                         : 0
                     )}
                   </p>
                 </Th>
-                <Th textAlign="center" p={[1, 5]}>
-                  <p className="lowercase font-extrabold text-xs md:text-lg">
+                <Th textAlign="center" p={[1, 3]}>
+                  <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                     {formatNumber(
                       parcels.filter((p) => p._id == firma)[0]["sum"] -
                         (hipoteke[firma]

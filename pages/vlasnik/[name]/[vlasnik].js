@@ -12,40 +12,77 @@ import {
   Th,
   Td,
   TableCaption,
+  IconButton,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { formatNumber, makeOpstineFromFirme } from "../../../utils/utils";
 import Map from "../../../components/index/map_component";
 import coords from "../../../utils/vojvodina_coordinates.json";
+import { ArrowLeftIcon, ChevronDownIcon, Window } from "@chakra-ui/icons";
 
-export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina }) {
+export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina, backOpstina }) {
   const parcels = JSON.parse(parcelsJSON);
   return (
     <div className="flex flex-col flex-1">
       {/*<Map opstine={opstine} />*/}
+      <div className="absolute top-2 left-2 z-50">
+        {backOpstina?
+        <Link
+          passHref
+          to={`/opstina/${opstina}`}
+          as={`/opstina/${opstina}`}
+          href={`/opstina/${opstina}`}
+        >
+          <IconButton
+            colorScheme="lime"
+            size={useBreakpointValue(["sm", "md", "lg"])}
+            aria-label="go to home"
+            icon={<ArrowLeftIcon />}
+          />
+        </Link>
+        :
+        <Link
+          passHref
+          to={`/vlasnik/${vlasnik}`}
+          as={`/vlasnik/${vlasnik}`}
+          href={`/vlasnik/${vlasnik}`}
+        >
+          <IconButton
+            colorScheme="lime"
+            size={useBreakpointValue(["sm", "md", "lg"])}
+            aria-label="go to home"
+            icon={<ArrowLeftIcon />}
+          />
+        </Link>}
+      </div>
       <Table
-        className="text-xs md:text-lg"
+        className="font-oswald text-xs md:text-lg"
         variant="striped"
-        colorScheme="gray"
-        mt={[2, 10]}
+        colorScheme="lime"
+        mt={[10, 20]}
       >
-        <TableCaption fontSize={'large'}  placement="top" >Pregled svog zemljišta vlasnika {vlasnik} u opštini {opstina}</TableCaption>
+        <TableCaption placement="top">
+          <p className="font-oswald text-base md:text-lg">
+            Pregled svog zemljišta vlasnika {vlasnik} u opštini {opstina}
+          </p>
+        </TableCaption>
         <Thead>
           <Tr>
             <Th textAlign="center" p={[1, 5]}>
-              KO
+              <p className="font-oswald text-xs md:text-lg">KO</p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Broj parcele
+              <p className="font-oswald text-xs md:text-lg">Broj parcele</p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Klasa
+              <p className="font-oswald text-xs md:text-lg">Klasa</p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Površina
+              <p className="font-oswald text-xs md:text-lg">Površina</p>
             </Th>
             <Th textAlign="center" p={[1, 5]}>
-              Hipoteka
+              <p className="font-oswald text-xs md:text-lg">Hipoteka</p>
             </Th>
           </Tr>
         </Thead>
@@ -63,7 +100,12 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina }) {
                 <Td p={[2, 5]} isNumeric>
                   {formatNumber(parcel.povrsina)}
                 </Td>
-                <Td isNumeric p={[0, 2]}>{parcel.hipoteka_1 + (parcel.hipoteka_2.length>0? (" & " + parcel.hipoteka_2) : '')}</Td>
+                <Td isNumeric p={[0, 2]}>
+                  {parcel.hipoteka_1 +
+                    (parcel.hipoteka_2.length > 0
+                      ? " & " + parcel.hipoteka_2
+                      : "")}
+                </Td>
               </Tr>
             );
           })}
@@ -97,8 +139,11 @@ export async function getServerSideProps(context) {
   // both can do
   const { name } = context.params;
   const { vlasnik } = context.query;
+  const { opstina } = context.query;
+  console.log(context.query);
+  console.log(opstina);
   
-  const parcels = await Parcel.find({ vlasnistvo: vlasnik, opstina: name });
+  const parcels = await Parcel.find({ vlasnistvo: vlasnik, opstina: name }).sort({broj_parcele: 1});
   //let opstineSum = await Parcel.aggregate([
   //  { $match: { vlasnistvo: name } },
   //  { $group: { _id: "$opstina", sum: { $sum: "$povrsina" } } },
@@ -136,6 +181,7 @@ export async function getServerSideProps(context) {
       vlasnik: vlasnik,
       opstina: name,
       parcelsJSON: JSON.stringify(parcels),
+      backOpstina: opstina ? opstina : false
       //sum: sum,
       //opstine: opstineSrednjeno,
     },

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import landIco from "../../public/landicon1.png";
-import { Button, Input, useToast } from "@chakra-ui/react";
+import { Button, Input, useToast, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/client";
 
@@ -72,28 +72,33 @@ export default function LoginScreen({}) {
                 className=""
               />
             </motion.div>
-            <div className="block m-auto mt-7">
+            <HStack className="block m-auto mt-7 justify-center">
               <Input
                 w={24}
-                fontSize={[12, 12, 16]}
+                pt={0}
+                pb={0}
+                h={12}
+                //lineHeight={10}
+                fontSize={[12, 16, 16]}
                 type="password"
                 onChange={handleChange}
               />
 
               <Button
                 bgColor={"#006871"}
-                pt={1}
-                pb={1}
+                pt={0}
+                pb={0}
                 ml={2}
+                h={12}
                 className="rounded-sm text-white bg-green-basic font-oswald"
-                fontSize={[12, 12, 16]}
+                fontSize={[12, 16, 16]}
                 onClick={handleSubmit}
                 isLoading={loading}
                 _hover={{ bg: "#006871" }}
               >
                 Login
               </Button>
-            </div>
+            </HStack>
             <div className="text-right font-haas text-green-basic text-xs m-1 mt-3 mb-1 md:m-3 ">
               v. 1.0
             </div>
