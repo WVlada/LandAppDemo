@@ -23,6 +23,7 @@ import { ArrowLeftIcon, ChevronDownIcon, Window } from "@chakra-ui/icons";
 
 export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina, backOpstina }) {
   const parcels = JSON.parse(parcelsJSON);
+  const size = useBreakpointValue(["sm", "md", "lg"]);
   return (
     <div className="flex flex-col flex-1">
       {/*<Map opstine={opstine} />*/}
@@ -36,7 +37,7 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina, bac
         >
           <IconButton
             colorScheme="lime"
-            size={useBreakpointValue(["sm", "md", "lg"])}
+            size={size}
             aria-label="go to home"
             icon={<ArrowLeftIcon />}
           />
@@ -50,7 +51,7 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina, bac
         >
           <IconButton
             colorScheme="lime"
-            size={useBreakpointValue(["sm", "md", "lg"])}
+            size={size}
             aria-label="go to home"
             icon={<ArrowLeftIcon />}
           />
