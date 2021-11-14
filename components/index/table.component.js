@@ -85,7 +85,7 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                   as={`/vlasnik/${s}`}
                 >
                   <Tr className="cursor-pointer">
-                    <Td className="" p={[1, 3]}>
+                    <Td className="truncate overflow-ellipsis" p={[1, 3]}>
                       {s}
                     </Td>
 
