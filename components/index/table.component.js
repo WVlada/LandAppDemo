@@ -84,8 +84,10 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                   href={`/vlasnik/${s}`}
                   as={`/vlasnik/${s}`}
                 >
-                  <Tr className="cursor-pointer overflow-ellipsis truncate">
-                    <Td p={[1, 3]}>{s}</Td>
+                  <Tr className="cursor-pointer">
+                    <Td className="" p={[1, 3]}>
+                      {s}
+                    </Td>
 
                     <Td textAlign="right" p={[1, 3]}>
                       {formatNumber(firme[s].sum)}
@@ -110,17 +112,17 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
               <p className="lowercase font-bold font-oswald text-xs md:text-lg"></p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
                 {formatNumber(sumOfAll())}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
                 {formatNumber(hipoteke_sum)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate ">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
                 {formatNumber(sumOfAll() - hipoteke_sum)}
               </p>
             </Th>

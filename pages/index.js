@@ -68,8 +68,8 @@ export default function Index({
       <div className="flex flex-1 justify-center">
         <Link href="/klase" className="" w={50} passHref>
           <Button
-            mt={10}
-            mb={10}
+            mt={5}
+            mb={5}
             bgColor={"#94b8bb"}
             className="rounded-sm text-white bg-green-basic font-oswald"
           >

@@ -5,9 +5,7 @@ import dbConnect from "../utils/mongoose";
 
 export default function Klase({ objekat, klase }) {
   return (
-    <div className="flex flex-col flex-1">
       <TabelaKlasa objekat={objekat} klase={klase} />
-    </div>
   );
 }
 

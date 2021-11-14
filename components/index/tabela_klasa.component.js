@@ -29,18 +29,18 @@ const TabelaKlasa = ({ objekat, klase }) => {
       animate="enter"
       exit="exit"
       transition={{ type: "easeIn", duration: 0.5 }}
-      className="flex flex-col"
+      className=""
     >
-      <HomeButton/>
+      <HomeButton />
       <Table
-        className="text-xs md:text-base w-max font-oswald"
+        className="text-base md:text-lg w-max h-full font-oswald truncate"
         variant="striped"
         colorScheme="gray"
         mt={[2, 10]}
-        //w="100%"
-        w="w-max"
+        w="100"
+        //h="100%"
         size="lg"
-        wrap="nowrap"
+        //wrap="nowrap"
       >
         <TableCaption className="uppercase" placement="top">
           <p className="font-oswald text-xl">Pregled zemljišta po klasama</p>
@@ -57,7 +57,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
                   </Th>
                 );
               })}
-            <Th textAlign="center" >
+            <Th textAlign="center">
               <p className="font-oswald">Ukupno:</p>
             </Th>
           </Tr>
@@ -91,7 +91,9 @@ const TabelaKlasa = ({ objekat, klase }) => {
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th><p className="font-oswald">Ukupno:</p></Th>
+            <Th>
+              <p className="font-oswald">Ukupno:</p>
+            </Th>
             {Object.keys(objekat)
               .sort()
               .map((f, index) => {
