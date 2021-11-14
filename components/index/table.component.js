@@ -54,7 +54,7 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
         w="100%"
       >
         <TableCaption className="uppercase" placement="top">
-          <p className="uppercase font-oswald text-xl">Pregled zemljišta</p>
+          <p className="uppercase font-oswald font-lg">Pregled zemljišta</p>
         </TableCaption>
         <Thead>
           <Tr>

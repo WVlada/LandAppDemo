@@ -32,10 +32,11 @@ const TabelaKlasa = ({ objekat, klase }) => {
       className=""
     >
       <HomeButton />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <Table
         className="text-base md:text-lg w-max h-full font-oswald truncate"
         variant="striped"
-        colorScheme="gray"
+        colorScheme="lime"
         mt={[2, 10]}
         w="100"
         //h="100%"
@@ -103,7 +104,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
                 });
                 return (
                   <Th key={index} textAlign="center" p={[0, 1]}>
-                    <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+                    <p className="lowercase font-oswald font-extrabold text-base md:text-lg">
                       {formatNumber(sum)}
                     </p>
                   </Th>
@@ -115,7 +116,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
                   totalSum += objekat[e][f] ? objekat[e][f] : 0;
                 });
               })}
-              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+              <p className="lowercase font-oswald font-extrabold text-base md:text-lg">
                 {formatNumber(totalSum)}
               </p>
             </Th>
