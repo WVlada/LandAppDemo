@@ -110,17 +110,17 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
               <p className="lowercase font-bold font-oswald text-xs md:text-lg"></p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate">
                 {formatNumber(sumOfAll())}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate">
                 {formatNumber(hipoteke_sum)}
               </p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg">
+              <p className="lowercase font-bold font-oswald text-xs md:text-lg  overflow-ellipsis truncate ">
                 {formatNumber(sumOfAll() - hipoteke_sum)}
               </p>
             </Th>

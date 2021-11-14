@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import landIco from "../../public/landicon1.png";
+import landIco from "../../public/landicon3.png";
 import { Button, Input, useToast, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/client";
@@ -43,7 +43,7 @@ export default function LoginScreen({}) {
     }, 700);
   };
   return (
-    <div className="flex flex-wrap w-full content-center bg-green-basic h-screen">
+    <div className="flex flex-wrap w-full content-center bg-green-basic h-screen rounded-md">
       <div className="flex flex-col bg-loginv bg-cover bg-no-repeat h-4/5 w-full justify-center">
         <motion.div
           variants={appear}
@@ -77,7 +77,7 @@ export default function LoginScreen({}) {
                 w={24}
                 pt={0}
                 pb={0}
-                h={12}
+                //h={12}
                 //lineHeight={10}
                 fontSize={[12, 16, 16]}
                 type="password"
@@ -89,7 +89,7 @@ export default function LoginScreen({}) {
                 pt={0}
                 pb={0}
                 ml={2}
-                h={12}
+                //h={12}
                 className="rounded-sm text-white bg-green-basic font-oswald"
                 fontSize={[12, 16, 16]}
                 onClick={handleSubmit}
@@ -99,7 +99,7 @@ export default function LoginScreen({}) {
                 Login
               </Button>
             </HStack>
-            <div className="text-right font-haas text-green-basic text-xs m-1 mt-3 mb-1 md:m-3 ">
+            <div className="text-right font-oswald text-green-basic text-xs m-1 mt-3 mb-1 md:m-3 ">
               v. 1.0
             </div>
             {/*loading ? <div>jeew</div> : null*/}
