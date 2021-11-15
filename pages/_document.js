@@ -11,7 +11,7 @@ class MyDocument extends Document {
       <Html>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <Head>
-          <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+          <link rel="shortcut icon" href="/favicon32x32.png" />
           <link rel="manifest" href="/manifest.json" />
           <meta name="description" content="Land app for detailed land info." />
         </Head>

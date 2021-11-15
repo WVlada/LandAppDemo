@@ -66,8 +66,8 @@ export async function getStaticProps(context) {
       }
     }
   });
-  console.log(f);
-  console.log("klase", klase);
+  //console.log(f);
+  //console.log("klase", klase);
 
   return {
     props: {

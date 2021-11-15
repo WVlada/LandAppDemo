@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import landIco from "../../public/landicon3.png";
+import landIco from "../../public/land_icon.png";
 import { Button, Input, useToast, HStack } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useSession, signIn, signOut } from "next-auth/client";
@@ -43,7 +43,7 @@ export default function LoginScreen({}) {
     }, 700);
   };
   return (
-    <div className="flex flex-wrap w-full content-center bg-green-basic h-screen rounded-md">
+    <div className="shad3 flex flex-wrap w-full content-center bg-green-basic h-screen rounded-md">
       <div className="flex flex-col bg-loginv bg-cover bg-no-repeat h-4/5 w-full justify-center">
         <motion.div
           variants={appear}
@@ -53,8 +53,8 @@ export default function LoginScreen({}) {
           transition={{ type: "easeIn", duration: 0.8 }}
           className=""
         >
-          <div className="flex-col bg-white text-center justify-center m-10 rounded-md shadow-2xl opacity-95">
-            <div className="text-center font-oswald uppercase mt-7 p-7 font-bold text-green-basic text-2xl w-full md:text-3xl ">
+          <div className="shad flex-col bg-white text-center justify-center m-10 rounded-md shadow-2xl opacity-95">
+            <div className="text-center font-oswald mt-7 p-7 font-bold text-green-basic text-2xl w-full md:text-3xl ">
               Land app.
             </div>
             <motion.div
@@ -65,8 +65,8 @@ export default function LoginScreen({}) {
               transition={{ type: "easeIn", duration: 2 }}
             >
               <Image
-                width={140}
-                height={140}
+                width={120}
+                height={120}
                 alt="ew"
                 src={landIco}
                 className=""
@@ -82,6 +82,7 @@ export default function LoginScreen({}) {
                 fontSize={[12, 16, 16]}
                 type="password"
                 onChange={handleChange}
+                className="shad2"
               />
 
               <Button
@@ -90,7 +91,7 @@ export default function LoginScreen({}) {
                 pb={0}
                 ml={2}
                 //h={12}
-                className="rounded-sm text-white bg-green-basic font-oswald"
+                className="shad2 rounded-sm text-white bg-green-basic font-oswald"
                 fontSize={[12, 16, 16]}
                 onClick={handleSubmit}
                 isLoading={loading}
