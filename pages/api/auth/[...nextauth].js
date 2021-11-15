@@ -14,10 +14,12 @@ export default NextAuth({
       authorize: async ({ pass }) => {
         if (pass) {
           if (pass == process.env.pass_DJ) {
+            await dbConnect()
             let ses = await Sesion.create({user: 'dj', time_started: Date.now()})
             return { email: "dj" };
           }
           if (pass == process.env.pass_VL) {
+            await dbConnect()
             let ses = await Sesion.create({user: 'vl', time_started: Date.now()})
             return { email: "vl" };
           }
