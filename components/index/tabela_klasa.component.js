@@ -32,7 +32,6 @@ const TabelaKlasa = ({ objekat, klase }) => {
       className=""
     >
       <HomeButton />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <Table
         className="text-base md:text-lg w-max h-full font-oswald truncate"
         variant="striped"
