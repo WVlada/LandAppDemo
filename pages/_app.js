@@ -5,6 +5,7 @@ import '../styles/globals.css'
 import { Provider } from "next-auth/client";
 import { extendTheme } from "@chakra-ui/react";
 import NextNprogress from "nextjs-progressbar";
+import { useEffect } from "react";
 
 const theme = extendTheme({
   colors: {
@@ -24,6 +25,23 @@ const theme = extendTheme({
 });
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("/service-worker.js").then(
+          function (registration) {
+            console.log(
+              "Service Worker registration successful with scope: ",
+              registration.scope
+            );
+          },
+          function (err) {
+            console.log("Service Worker registration failed: ", err);
+          }
+        );
+      });
+    }
+  }, []);
   return (
     <ChakraProvider theme={theme}>
       <NextNprogress
