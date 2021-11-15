@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import dbConnect from "../../../utils/mongoose";
 import User from "../../../models/user";
-import Session from "../../../models/session";
+import Sesion from "../../../models/sesion";
 import Providers from "next-auth/providers";
 
 export default NextAuth({
@@ -14,11 +14,11 @@ export default NextAuth({
       authorize: async ({ pass }) => {
         if (pass) {
           if (pass == process.env.pass_DJ) {
-            let ses = await Session.create({user: 'dj', time_started: Date.now()})
+            let ses = await Sesion.create({user: 'dj', time_started: Date.now()})
             return { email: "dj" };
           }
           if (pass == process.env.pass_VL) {
-            let ses = await Session.create({user: 'vl', time_started: Date.now()})
+            let ses = await Sesion.create({user: 'vl', time_started: Date.now()})
             return { email: "vl" };
           }
         } else {
