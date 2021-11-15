@@ -58,7 +58,7 @@ export default function Index({
       </div>
 
       <div className="flex flex-col flex-1">
-        {session ? <FileUploadForm /> : null}
+        {session.user.admin ? <FileUploadForm /> : null}
         <TableComponent
           hipoteke={hipoteke}
           firme={firme}
