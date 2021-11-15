@@ -31,6 +31,7 @@ const TabelaKlasa = ({ objekat, klase }) => {
       transition={{ type: "easeIn", duration: 0.5 }}
       className=""
     >
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <HomeButton />
       <Table
         className="text-base md:text-lg w-max h-full font-oswald truncate"

@@ -54,7 +54,7 @@ export async function getStaticProps(context) {
       if (klaseBitne.includes(red._id.klasa)) {
         f[red._id.vlasnistvo][red._id.klasa] = red.sum;
       } else {
-        console.log("*", red.sum);
+        //console.log("*", red.sum);
         f[red._id.vlasnistvo]["ostalo"] = red.sum;
       }
     }
