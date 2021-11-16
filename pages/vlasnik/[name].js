@@ -54,16 +54,16 @@ export default function Firma({
         </TableCaption>
         <Thead>
           <Tr>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="font-oswald text-xs md:text-lg">Opština</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="font-oswald text-xs md:text-lg">Površina</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="font-oswald text-xs md:text-lg">Hipoteka</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="font-oswald text-xs md:text-lg">Slobodno</p>
             </Th>
           </Tr>
@@ -80,17 +80,17 @@ export default function Firma({
                             .preFillColor
                         : "",
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer truncate"
                   key={index}
                 >
-                  <Td p={[2, 3]}>{opstina}</Td>
-                  <Td textAlign="right" p={[2, 3]}>
+                  <Td p={[1, 2]}>{opstina}</Td>
+                  <Td textAlign="right" p={[1, 2]}>
                     {formatNumber(opstine[opstina].sum)}
                   </Td>
-                  <Td p={[2, 3]} isNumeric>
+                  <Td p={[1, 2]} isNumeric>
                     {formatNumber(suma_hipoteka)}
                   </Td>
-                  <Td p={[2, 3]} isNumeric>
+                  <Td p={[1, 2]} isNumeric>
                     {formatNumber(opstine[opstina].sum - suma_hipoteka)}
                   </Td>
                 </Tr>
@@ -99,23 +99,23 @@ export default function Firma({
           })}
         </Tbody>
         <Tfoot>
-          <Tr>
-            <Th textAlign="center" p={[1, 3]}>
+          <Tr className="truncate">
+            <Th textAlign="center" p={[1, 2]}>
               <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {/*formatNumber(sum)*/}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(sum)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(suma_hipoteka)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
                 {formatNumber(sum - suma_hipoteka)}
               </p>
@@ -135,17 +135,17 @@ export default function Firma({
         </TableCaption>
         <Thead>
           <Tr>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="font-oswald text-xs md:text-lg">Banka/poverilac:</p>
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="font-oswald text-xs md:text-lg">Poverilac</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="font-oswald text-xs md:text-lg">Hipoteka I:</p>
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="font-oswald text-xs md:text-lg">Hipoteka I</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="font-oswald text-xs md:text-lg">Hipoteka II:</p>
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="font-oswald text-xs md:text-lg">Hipoteka II</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="font-oswald text-xs md:text-lg">Ukupno:</p>
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="font-oswald text-xs md:text-lg">Ukupno</p>
             </Th>
           </Tr>
         </Thead>
@@ -165,23 +165,23 @@ export default function Firma({
             return (
               <Link passHref key={index} href="/">
                 <Tr style={{}} className="cursor-pointer" key={index}>
-                  <Td p={[2, 3]}>{hipoteka}</Td>
-                  <Td textAlign="right" p={[2, 3]}>
+                  <Td p={[1, 2]}>{hipoteka}</Td>
+                  <Td textAlign="right" p={[2, 2]}>
                     <p className="font-oswald">
                       {hipoteke[hipoteka]
                         ? formatNumber(hipoteke[hipoteka])
                         : ""}
                     </p>
                   </Td>
-                  <Td p={[2, 3]} isNumeric>
-                    <p className="font-oswald">
+                  <Td p={[1, 2]} isNumeric>
+                    <p className="font-oswald truncate">
                       {hipoteke_drugog_reda[hipoteka]
                         ? formatNumber(hipoteke_drugog_reda[hipoteka])
                         : ""}
                     </p>
                   </Td>
-                  <Td isNumeric>
-                    <p className="font-oswald">
+                  <Td p={[1, 2]} isNumeric>
+                    <p className="font-oswald truncate">
                       {formatNumber(
                         (hipoteke[hipoteka] ? hipoteke[hipoteka] : 0) +
                           (hipoteke_drugog_reda[hipoteka]
@@ -197,23 +197,23 @@ export default function Firma({
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="lowercase font-oswald font-extrabold text-xs truncate md:text-lg">
                 {/*formatNumber(sum)*/}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="lowercase font-oswald font-extrabold text-xs truncate md:text-lg">
                 {formatNumber(suma_donja_tabela_hip_1)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="lowercase font-oswald font-extrabold text-xs truncate md:text-lg">
                 {formatNumber(suma_donja_tabela_hip_2)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-oswald font-extrabold text-xs md:text-lg">
+            <Th textAlign="center" p={[1, 2]}>
+              <p className="lowercase font-oswald font-extrabold text-xs truncate md:text-lg">
                 {formatNumber(suma_donja_tabela_hip)}
               </p>
             </Th>

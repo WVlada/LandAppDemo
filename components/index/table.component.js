@@ -61,13 +61,13 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
             <Th w={"53px"} textAlign="center" p={[1, 3]}>
               <p className="uppercase font-oswald">Vlasnik</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="uppercase font-oswald">Površina</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="uppercase font-oswald">Hipoteka</p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th textAlign="center" p={[1, 2]}>
               <p className="uppercase font-oswald">Slobodno</p>
             </Th>
           </Tr>
@@ -85,17 +85,17 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                   as={`/vlasnik/${s}`}
                 >
                   <Tr className="cursor-pointer">
-                    <Td fontSize={[11, 12]} className="truncate overflow-ellipsis" p={[1, 3]}>
+                    <Td fontSize={[11, 12, 14]} className="truncate overflow-ellipsis" p={[1, 3]}>
                       {s}
                     </Td>
 
-                    <Td fontSize={[11, 12]} textAlign="right" p={[1, 3]}>
+                    <Td fontSize={[11, 12, 14]} textAlign="right" p={[1, 2]}>
                       {formatNumber(firme[s].sum)}
                     </Td>
-                    <Td fontSize={[11, 12]} p={[1, 3]} isNumeric>
+                    <Td fontSize={[11, 12, 14]} p={[1, 2]} isNumeric>
                       {hipoteke[s] ? formatNumber(hipoteke[s]) : formatNumber(0)}
                     </Td>
-                    <Td fontSize={[11, 12]} p={[1, 3]} isNumeric>
+                    <Td fontSize={[11, 12, 14]} p={[1, 2]} isNumeric>
                       {hipoteke[s]
                         ? formatNumber(firme[s].sum - hipoteke[s])
                         : formatNumber(firme[s].sum)}
