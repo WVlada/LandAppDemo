@@ -7,6 +7,7 @@ const customColors = {
     light: "#24b4bc",
     dark: "#015e65",
     100: "#24b4bc",
+    row: "#94b8bb"
   },
 };
 module.exports = {

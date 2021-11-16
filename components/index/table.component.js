@@ -58,7 +58,7 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
         </TableCaption>
         <Thead>
           <Tr>
-            <Th textAlign="center" p={[1, 3]}>
+            <Th w={"53px"} textAlign="center" p={[1, 3]}>
               <p className="uppercase font-oswald">Vlasnik</p>
             </Th>
             <Th textAlign="center" p={[1, 3]}>
@@ -85,17 +85,17 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                   as={`/vlasnik/${s}`}
                 >
                   <Tr className="cursor-pointer">
-                    <Td className="truncate overflow-ellipsis" p={[1, 3]}>
+                    <Td fontSize={[11, 12]} className="truncate overflow-ellipsis" p={[1, 3]}>
                       {s}
                     </Td>
 
-                    <Td textAlign="right" p={[1, 3]}>
+                    <Td fontSize={[11, 12]} textAlign="right" p={[1, 3]}>
                       {formatNumber(firme[s].sum)}
                     </Td>
-                    <Td p={[1, 3]} isNumeric>
-                      {hipoteke[s] ? formatNumber(hipoteke[s]) : 0}
+                    <Td fontSize={[11, 12]} p={[1, 3]} isNumeric>
+                      {hipoteke[s] ? formatNumber(hipoteke[s]) : formatNumber(0)}
                     </Td>
-                    <Td p={[1, 3]} isNumeric>
+                    <Td fontSize={[11, 12]} p={[1, 3]} isNumeric>
                       {hipoteke[s]
                         ? formatNumber(firme[s].sum - hipoteke[s])
                         : formatNumber(firme[s].sum)}
@@ -108,21 +108,21 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
         </Tbody>
         <Tfoot>
           <Tr>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg"></p>
+            <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
+              <p className="lowercase md:text-lg"></p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
+            <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
+              <p className="lowercase md:text-lg">
                 {formatNumber(sumOfAll())}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
+            <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
+              <p className="lowercase md:text-lg">
                 {formatNumber(hipoteke_sum)}
               </p>
             </Th>
-            <Th textAlign="center" p={[1, 3]}>
-              <p className="lowercase font-bold font-oswald text-xs md:text-lg truncate">
+            <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
+              <p className="lowercase md:text-lg">
                 {formatNumber(sumOfAll() - hipoteke_sum)}
               </p>
             </Th>

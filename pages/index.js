@@ -67,14 +67,12 @@ export default function Index({
       </div>
       <div className="flex flex-1 justify-center">
         <Link href="/klase" className="" w={50} passHref>
-          <Button
-            mt={5}
-            mb={5}
-            bgColor={"#94b8bb"}
-            className="rounded-sm text-white bg-green-basic font-oswald"
+          <button
+            fontFamily="Oswald, ui-sans-serif"
+            className="text-white text-sm bg-green-row rounded-sm p-1 bg-green-basic font-oswald mt-5 mb-5"
           >
             Tabela klasa
-          </Button>
+          </button>
         </Link>
       </div>
       <div className="flex flex-1 justify-end">
