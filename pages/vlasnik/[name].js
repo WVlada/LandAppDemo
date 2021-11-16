@@ -29,11 +29,6 @@ export default function Firma({
   suma_hipoteka,
   hipoteke_sve_keys,
 }) {
-  //const parcels = JSON.parse(parcelsJSON)
-  //console.log(vlasnik);
-  //console.log( parcelsJSON);
-  //console.log(sum);
-  //console.log(opstine);
   let suma_donja_tabela_hip_1 = 0;
   let suma_donja_tabela_hip_2 = 0;
   let suma_donja_tabela_hip = 0;

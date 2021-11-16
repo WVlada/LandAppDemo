@@ -1,7 +1,9 @@
 import Parcel from "../../models/parcel";
 import Poverilac from "../../models/poverilac";
+import dbConnect from "../../utils/mongoose";
 
 export default async function handler(req, res) {
+  await dbConnect();
   const data = req.body.data;
 
   let rb = 0;
@@ -24,7 +26,7 @@ export default async function handler(req, res) {
       arrayOfPoverilac.push(data[rb][11])
     }
     if(!arrayOfPoverilac.includes(data[rb][12])){
-      arrayOfPoverilac.push(data[rb][12])
+      arrayOfPoverilac.push(data[rb][12]);
     }
     rb += 1;
   }
@@ -34,7 +36,7 @@ export default async function handler(req, res) {
   arrayOfPoverilac.map((name)=>{
     if(name != "" && name != null)
     objOfPoverilac.push({
-      ime: name
+      ime: name.trim()
     })
   })
   try {

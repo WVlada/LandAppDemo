@@ -91,17 +91,17 @@ export default function Firma({ vlasnik, parcelsJSON, sum, opstine, opstina, bac
           {parcels.map((parcel, index) => {
             return (
               <Tr className="cursor-pointer" key={index}>
-                <Td p={[0, 2]}>{parcel.ko}</Td>
-                <Td textAlign="right" p={[2, 5]}>
+                <Td p={[1, 2]}>{parcel.ko}</Td>
+                <Td textAlign="right" p={[1, 5]}>
                   {parcel.broj_parcele}
                 </Td>
-                <Td p={[2, 5]} isNumeric>
+                <Td p={[1, 5]} isNumeric>
                   {parcel.klasa}
                 </Td>
-                <Td p={[2, 5]} isNumeric>
+                <Td p={[1, 5]} isNumeric>
                   {formatNumber(parcel.povrsina)}
                 </Td>
-                <Td isNumeric p={[0, 2]}>
+                <Td isNumeric p={[1, 2]}>
                   {parcel.hipoteka_1 +
                     (parcel.hipoteka_2.length > 0
                       ? " & " + parcel.hipoteka_2

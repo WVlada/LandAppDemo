@@ -85,7 +85,11 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                   as={`/vlasnik/${s}`}
                 >
                   <Tr className="cursor-pointer">
-                    <Td fontSize={[11, 12, 14]} className="truncate overflow-ellipsis" p={[1, 3]}>
+                    <Td
+                      fontSize={[11, 12, 14]}
+                      className="truncate overflow-ellipsis"
+                      p={[1, 3]}
+                    >
                       {s}
                     </Td>
 
@@ -93,7 +97,9 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
                       {formatNumber(firme[s].sum)}
                     </Td>
                     <Td fontSize={[11, 12, 14]} p={[1, 2]} isNumeric>
-                      {hipoteke[s] ? formatNumber(hipoteke[s]) : formatNumber(0)}
+                      {hipoteke[s]
+                        ? formatNumber(hipoteke[s])
+                        : formatNumber(0)}
                     </Td>
                     <Td fontSize={[11, 12, 14]} p={[1, 2]} isNumeric>
                       {hipoteke[s]
@@ -112,17 +118,17 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
               <p className="lowercase md:text-lg"></p>
             </Th>
             <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
-              <p className="lowercase md:text-lg">
+              <p className="lowercase md:text-lg font-oswald">
                 {formatNumber(sumOfAll())}
               </p>
             </Th>
             <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
-              <p className="lowercase md:text-lg">
+              <p className="lowercase md:text-lg font-oswald">
                 {formatNumber(hipoteke_sum)}
               </p>
             </Th>
             <Th textAlign="center" fontSize={[10, 12]} p={[0, 3]}>
-              <p className="lowercase md:text-lg">
+              <p className="lowercase md:text-lg font-oswald">
                 {formatNumber(sumOfAll() - hipoteke_sum)}
               </p>
             </Th>

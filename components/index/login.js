@@ -72,7 +72,7 @@ export default function LoginScreen({}) {
                 className=""
               />
             </motion.div>
-            <HStack className="block m-auto mt-7 justify-center">
+            <HStack className="m-auto mt-7 justify-center ">
               <Input
                 w={24}
                 pt={0}
@@ -82,7 +82,7 @@ export default function LoginScreen({}) {
                 fontSize={[12, 16, 16]}
                 type="password"
                 onChange={handleChange}
-                className="shad2"
+                className="shad2 rounded-sm font-oswald"
               />
 
               <Button
