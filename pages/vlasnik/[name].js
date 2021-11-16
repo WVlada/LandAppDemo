@@ -163,7 +163,7 @@ export default function Firma({
                 ? hipoteke_drugog_reda[hipoteka]
                 : 0);
             return (
-              <Link passHref key={index} href="/">
+              <Link passHref key={index} href={`/poverilac/${hipoteka}`}>
                 <Tr style={{}} className="cursor-pointer" key={index}>
                   <Td p={[1, 2]}>{hipoteka}</Td>
                   <Td textAlign="right" p={[2, 2]}>

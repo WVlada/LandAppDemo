@@ -20,19 +20,26 @@ export default async function handler(req, res) {
       hipoteka_1: data[rb][11] ? data[rb][11] : "",
       hipoteka_2: data[rb][12] ? data[rb][12] : "",
     });
-    rb += 1;
     if(!arrayOfPoverilac.includes(data[rb][11])){
       arrayOfPoverilac.push(data[rb][11])
     }
     if(!arrayOfPoverilac.includes(data[rb][12])){
       arrayOfPoverilac.push(data[rb][12])
     }
+    rb += 1;
   }
   let deletedParcels = await Parcel.deleteMany({});
   let deletedPoverilacs = await Poverilac.deleteMany({});
+  let objOfPoverilac= []
+  arrayOfPoverilac.map((name)=>{
+    if(name != "" && name != null)
+    objOfPoverilac.push({
+      ime: name
+    })
+  })
   try {
     let createdObjects = await Parcel.insertMany(arrayOfObjects);
-    let createdPoverilacs = await Poverilac.insertMany(arrayOfPoverilac);
+    let createdPoverilacs = await Poverilac.insertMany(objOfPoverilac);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ text: "Error with some excel fields" });
