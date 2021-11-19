@@ -88,9 +88,10 @@ export default function Index({
 }
 
 const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
+  console.log("pocetno",hipotekePocetno)
   const hipoteke = {};
   hipotekePocetno.map((red) => {
-    if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "") {
+    if (red._id.hipoteka_1 || red._id.hipoteka_2 ) {
       if (hipoteke[red._id.vlasnistvo]) {
         hipoteke[red._id.vlasnistvo] += red.sum;
       } else {
@@ -100,6 +101,7 @@ const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
       }
     }
   });
+  console.log("krajnje",hipoteke)
   return hipoteke;
 };
 const makeOpstineFromFirme = (firme, opstine) => {
@@ -185,7 +187,7 @@ export async function getStaticProps(context) {
   //});
   const opstineSrednjeno = makeOpstineFromFirme(firme, opstinePocetno);
   //const hipotekeSrednjeno = makeHipotekeFromFirme(firme, hipotekePocetno);
-
+//console.log(hipotekePocetno)
   return {
     props: {
       vlasnistvoSum: vlasnistvoSum,
