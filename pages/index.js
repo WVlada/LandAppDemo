@@ -91,7 +91,7 @@ const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
   console.log("pocetno",hipotekePocetno)
   const hipoteke = {};
   hipotekePocetno.map((red) => {
-    if (red._id.hipoteka_1 || red._id.hipoteka_2 ) {
+    if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "" ) {
       if (hipoteke[red._id.vlasnistvo]) {
         hipoteke[red._id.vlasnistvo] += red.sum;
       } else {
