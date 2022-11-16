@@ -141,8 +141,8 @@ export async function getServerSideProps(context) {
   const { name } = context.params;
   const { vlasnik } = context.query;
   const { opstina } = context.query;
-  console.log(context.query);
-  console.log(opstina);
+  //console.log(context.query);
+  //console.log(opstina);
   
   const parcels = await Parcel.find({ vlasnistvo: vlasnik, opstina: name }).sort({broj_parcele: 1});
   //let opstineSum = await Parcel.aggregate([

@@ -19,7 +19,7 @@ export default function Pover({ poverilac }) {
   };
   const handleSubmit = async () => {
     setSubmitting(true);
-    console.log("value", textvalue);
+    //console.log("value", textvalue);
     const res = await fetch("/api/set_opis", {
       method: "POST",
       body: JSON.stringify({ poverilac: pov.ime, textvalue: textvalue }),
@@ -101,9 +101,9 @@ export default function Pover({ poverilac }) {
 export async function getServerSideProps(context) {
   await dbConnect();
   const { poverilac } = context.params;
-  console.log(context.params);
+  //console.log(context.params);
   const pov = await Poverilac.findOne({ ime: poverilac });
-  console.log(pov);
+  //console.log(pov);
 
   return {
     props: {

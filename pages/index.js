@@ -35,10 +35,8 @@ export default function Index({
     setOpstine(newOpstine);
     setHipoteke(newHipoteke);
   }, [firme, opstinePocetno, hipotekePocetno]);
-  //console.log("Opstine:", opstine);
-  //console.log("Hipoteke:", hipoteke);
   const [session, loading] = useSession();
-  console.log("sess:", session);
+  
   const handleLogout = () => {
     signOut();
   };
@@ -88,7 +86,7 @@ export default function Index({
 }
 
 const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
-  console.log("pocetno",hipotekePocetno)
+  //console.log("pocetno",hipotekePocetno)
   const hipoteke = {};
   hipotekePocetno.map((red) => {
     if (red._id.hipoteka_1 != "" || red._id.hipoteka_2 != "" ) {
@@ -101,7 +99,7 @@ const makeHipotekeFromFirme = (firme, hipotekePocetno) => {
       }
     }
   });
-  console.log("krajnje",hipoteke)
+  //console.log("krajnje",hipoteke)
   return hipoteke;
 };
 const makeOpstineFromFirme = (firme, opstine) => {

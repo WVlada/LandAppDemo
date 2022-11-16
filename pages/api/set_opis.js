@@ -1,14 +1,12 @@
 import Poverilac from "../../models/poverilac";
 import dbConnect from "../../utils/mongoose";
 export default async function handler(req, res) {
-    console.log(req.body)
   const opis = req.body.textvalue;
   const ime = req.body.poverilac;
   await dbConnect();
 
   try {
     let parcel = await Poverilac.findOne({ ime: ime });
-    console.log(parcel)
     await parcel.update({ opis: opis });
   } catch (err) {
     return res

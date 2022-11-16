@@ -200,7 +200,7 @@ export async function getServerSideProps(context) {
   parcels.map((e) => {
     firme[e._id] = { active: true };
   });
-  console.log("parcels", parcels);
+  //console.log("parcels", parcels);
   //const sum = parcels.reduce(function (a, b) {
   //  return a + b.povrsina;
   //}, 0);
@@ -208,7 +208,7 @@ export async function getServerSideProps(context) {
   //  active: true,
   ////  sum: sum,
   //};
-  console.log("firme:", firme);
+  //console.log("firme:", firme);
   const hip = await Parcel.aggregate([
     { $match: { opstina: name } },
     { $sort: { _id: -1 } },
@@ -221,7 +221,7 @@ export async function getServerSideProps(context) {
     },
     sum: { $sum: "$povrsina" },
   });
-  console.log("hip:", hip[0]);
+  //console.log("hip:", hip[0]);
   let hipoteke = {};
   hip.map((red) => {
     if (red._id.hipoteka_1 || red._id.hipoteka_2) {
@@ -240,7 +240,7 @@ export async function getServerSideProps(context) {
     } else {
     }
   });
-  console.log("hipteke", hipoteke);
+  //console.log("hipteke", hipoteke);
 
   //ko["Vanja N."]["Banatski brestovac"].map((a) => console.log(a.broj_parcele));
 

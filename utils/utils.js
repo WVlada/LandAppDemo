@@ -57,6 +57,6 @@ export const makeOpstineFromFirme = (firme, opstine) => {
     } else {
     }
   });
-  console.log("opstine sredjeno:", opstineSrednjeno)
+  //console.log("opstine sredjeno:", opstineSrednjeno)
   return opstineSrednjeno;
 };

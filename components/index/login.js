@@ -9,7 +9,6 @@ export default function LoginScreen({}) {
   const [pass, setPass] = useState("");
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  console.log();
   const appear = {
     hidden: { opacity: 0, x: 0, y: 0 },
     enter: { opacity: 1, x: 0, y: 0 },
@@ -37,7 +36,6 @@ export default function LoginScreen({}) {
         });
         setLoading(false);
       } else {
-        console.log("sucess:", res);
         setLoading(false);
       }
     }, 700);

@@ -23,13 +23,11 @@ const TableComponent = ({ firme, firmeArray, hipoteke }) => {
   const handleChange = () => {};
   const keys = Object.keys(hipoteke);
   let hipoteke_sum = 0;
-  console.log("iz tabele*******************", hipoteke)
   keys.map((key) => {
     if (hipoteke[key]) {
       hipoteke_sum += hipoteke[key];
     }
     if(key == 'Nicco Agrar'){
-      console.log(hipoteke[key])
     }
   });
   const sumOfAll = () => {

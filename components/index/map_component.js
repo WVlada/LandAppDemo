@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ImageMapper, ImageMapperProps } from "react-image-mapper2";
+import ImageMapper from "react-img-mapper";
 import mapa from "../../public/vojvodina_map3.svg";
 import coords from "../../utils/vojvodina_coordinates.json";
 import {
